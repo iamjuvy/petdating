@@ -5,17 +5,23 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Ninja Dating</title>
+        <h:outputStylesheet name="css/style-login.css" />
     </h:head>
     <h:body>
-        <h:form>
-            <p:outputLabel value="UserName:" />
-            <p:inputText id="userName" /> 
-            <br/>
-            <p:outputLabel value="Password" />
-            <p:inputText id="passWord" />
-            <br />
-            <p:commandButton value="Log-in" action="#{loginView.login}" />
-        </h:form>
+        <p:panel id="login" styleClass="centered">
+            <h:form>
+                <p:outputLabel for="username" value="Username: "/>
+                <p:inputText id="username"/>
+                <br />
+                <p:outputLabel for="password" value="Password: " />
+                <p:password id="password" />
+                <br/>
+                <br />
+                <p:commandButton value="Log-in" action="#{loginView.login}" />
+                <br/>
+                <p:commandLink value="Register" action="#{loginView.register}" />
+            </h:form>
+        </p:panel> 
     </h:body>
 </html>
 

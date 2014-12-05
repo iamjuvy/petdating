@@ -33,4 +33,13 @@ public class LoginView {
             Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void register(){
+         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_registration.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
