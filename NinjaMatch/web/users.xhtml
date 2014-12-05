@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Profile Registration</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:panelGrid columns="2">
+                User Name:<h:inputText value="#{userBean.user.userName}" />
+                Password:<h:inputText value="#{userBean.user.password}" />
+                First Name:<h:inputText value="#{userBean.user.firstName}" />
+                Last Name:<h:inputText value="#{userBean.user.lastname}" />
+                Gender:<h:inputText value="#{userBean.user.gender}" />
+                Birth Date:<h:inputText converter="#{userConverter}" value="#{userBean.user.birthDate}"/>
+                Email Address<h:inputText value="#{userBean.user.email}"/>
+                Registered Date:<h:inputText converter="#{userConverter}" value="#{userBean.user.registeredDate}"/>
+                Street:<h:inputText value="#{userBean.address.street}"/>
+                City:<h:inputText value="#{userBean.address.city}"/>
+                State:<h:inputText value="#{userBean.address.state}"/>
+                Zip:<h:inputText value="#{userBean.address.zip}"/>
+            </h:panelGrid>
+            <h:commandButton value="Save" action="#{userBean.save}"/>
+        </h:form>
+        <h:form>
+            <h:inputText value="#{userBean.user.userName}" />
+            <h:commandButton value="Search" action="#{userBean.search}" />
+        </h:form>
+    </h:body>
+</html>
+

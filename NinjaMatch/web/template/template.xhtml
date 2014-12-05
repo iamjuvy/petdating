@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"  
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <f:view contentType="text/html" id="fview">
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Ninja Dating</title>
+        <ui:debug />
+        <f:metadata>
+            <ui:insert name="metadata" />
+        </f:metadata>
+        <h:head>
+            <h:outputStylesheet name="resources/css/bootstrap.css" />
+            <h:outputStylesheet name="resources/css/bootstrap-theme.css" />
+        </h:head>
+
+        <h:body>
+            <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+                <div class="page-header">
+                    <p:layoutUnit position="north" size="100" id="north">
+                        north
+                    </p:layoutUnit>
+                </div>
+
+                <p:layoutUnit position="west" id="west" resizable="false" style="height:580px;overflow:hidden;" size="225">
+                    <ui:insert name="west" />
+                </p:layoutUnit>
+
+                <p:layoutUnit styleClass="layoutUnitCenter" position="center">
+                    <h:form id="mainForm">
+                        <ui:insert name="content" />
+                    </h:form>
+                </p:layoutUnit>
+            </p:layout>
+        </h:body>
+    </f:view>
+</html>
+
