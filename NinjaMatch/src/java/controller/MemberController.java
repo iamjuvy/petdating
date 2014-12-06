@@ -18,11 +18,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.persistence.Query;
 import model.Address;
 import model.MemberAccount;
-import model.UserAccount;
 import util.DateUtil;
+import util.GoogleGeocode;
 
 /**
  *
@@ -38,8 +37,9 @@ public class MemberController implements Serializable {
     @EJB
     private UserFacade ejbUserFacade;
 
-    private DateUtil dateUtil = DateUtil.getInstance();
-
+    private final DateUtil dateUtil = DateUtil.getInstance();
+    private final GoogleGeocode geocoder = GoogleGeocode.getInstance();
+    
     private MemberAccount member;
     private Address address;
     private String month;
@@ -156,10 +156,11 @@ public class MemberController implements Serializable {
                 getMember().getEmail(),
                 dateUtil.getCurrentDate());
 
+        String geoCode = geocoder.getGeoCode(getAddress().getStreet()+" "+getAddress().getCity() +" "+getAddress().getState());
         address = new Address(getAddress().getStreet(),
                 getAddress().getCity(),
                 getAddress().getState(),
-                getAddress().getZip());
+                getAddress().getZip(),geoCode);
         getMember().setAddress(address);
         ejbMemberFacade.create(member);
         System.out.println("Save Successfully!");

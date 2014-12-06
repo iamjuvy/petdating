@@ -30,9 +30,17 @@ public class Address implements Serializable {
         this.city = city;
         this.state = state;
         this.zip = zip;
-        //compute for Geocode;
-        this.geoCode = "-41,93";
     }
+
+    public Address(String street, String city, String state, String zip, String geoCode) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.geoCode = geoCode;
+    }
+    
+    
     
     public String getStreet() {
         return street;
