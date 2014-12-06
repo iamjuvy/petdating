@@ -25,7 +25,7 @@ public class Message implements Serializable {
     private String message;
     private String tittle;
     @ManyToOne
-    private Member member;
+    private MemberAccount member;
 
     @Override
     public int hashCode() {
@@ -97,14 +97,14 @@ public class Message implements Serializable {
     /**
      * @return the member
      */
-    public Member getMember() {
+    public MemberAccount getMember() {
         return member;
     }
 
     /**
      * @param member the member to set
      */
-    public void setMember(Member member) {
+    public void setMember(MemberAccount member) {
         this.member = member;
     }
     

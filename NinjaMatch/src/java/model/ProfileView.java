@@ -32,9 +32,9 @@ public class ProfileView implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date visitedDate;
     @ManyToOne
-    private Member member;
+    private MemberAccount member;
     @JoinColumn (name = "ID_MEMBER_VISITED")
-    private Member memberVisited;
+    private MemberAccount memberVisited;
 
     /**
      * @return the id
@@ -67,28 +67,28 @@ public class ProfileView implements Serializable {
     /**
      * @return the member
      */
-    public Member getMember() {
+    public MemberAccount getMember() {
         return member;
     }
 
     /**
      * @param member the member to set
      */
-    public void setMember(Member member) {
+    public void setMember(MemberAccount member) {
         this.member = member;
     }
 
     /**
      * @return the memberVisited
      */
-    public Member getMemberVisited() {
+    public MemberAccount getMemberVisited() {
         return memberVisited;
     }
 
     /**
      * @param memberVisited the memberVisited to set
      */
-    public void setMemberVisited(Member memberVisited) {
+    public void setMemberVisited(MemberAccount memberVisited) {
         this.memberVisited = memberVisited;
     }
     

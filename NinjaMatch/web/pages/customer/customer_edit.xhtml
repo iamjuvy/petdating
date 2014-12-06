@@ -11,12 +11,18 @@
     </ui:define>
 
     <ui:define name="content">
-        
+        <p:growl id="messages" showDetail="true" />
+        <p:graphicImage  cache="false" style="width:150px;height:150px;" value="#{imageBean.streamedContent}" id="refresh"  />
+        <h:form enctype="multipart/form-data">
+            <br />
+            <p:fileUpload value="#{imageBean.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  mode="simple" update="refresh"/>
+            <br />
+            <p:commandButton id="btnBool" value="Upload" ajax="false" actionListener="#{imageBean.upload}"/>
+        </h:form>
     </ui:define>
 
     <ui:define name="west">
-        <h:form>  
-            
+        <h:form>    
             <p:menu>
                 <p:submenu label="Home">
                     <p:menuitem value="Edit Profile" outcome="/pages/customer/customer_edit" icon="ui-icon-person"/>

@@ -8,14 +8,14 @@ package ejb;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import model.Member;
+import model.MemberAccount;
 
 /**
  *
  * @author atan
  */
 @Stateless
-public class MemberFacade extends AbstractFacade<Member> {
+public class MemberFacade extends AbstractFacade<MemberAccount> {
     @PersistenceContext(unitName = "ninjamatchPU")
     private EntityManager em;
 
@@ -25,7 +25,7 @@ public class MemberFacade extends AbstractFacade<Member> {
     }
 
     public MemberFacade() {
-        super(Member.class);
+        super(MemberAccount.class);
     }
     
 }

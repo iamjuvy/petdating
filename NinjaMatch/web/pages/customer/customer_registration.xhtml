@@ -1,33 +1,43 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-    template="/template/template.xhtml">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/template/template.xhtml">
 
     <ui:define name="metadata">
-      
+
     </ui:define>
     <ui:define name="content">
-        
-            <h:form>
+
+        <h:form>
+            <p:message for="email" />
             <h:panelGrid columns="2">
-                User Name:<h:inputText value="#{memberBean.member.userName}" />
-                Password:<h:inputText value="#{memberBean.member.password}" />
-                First Name:<h:inputText value="#{memberBean.member.firstName}" />
-                Last Name:<h:inputText value="#{memberBean.member.lastname}" />
-                Gender:<h:inputText value="#{memberBean.member.gender}" />
-                Birth Date:<h:inputText converter="#{userConverter}" value="#{memberBean.member.birthDate}"/>
-                Email Address<h:inputText value="#{memberBean.member.email}"/>
-                Registered Date:<h:inputText converter="#{userConverter}" value="#{memberBean.member.registeredDate}"/>
+                User Name:<h:inputText value="#{memberBean.member.userName}" required="true" />
+                Password:<p:password id="pwd1" value="#{memberBean.member.password}" match="pwd2" label="Password 1" required="true" validatorMessage="does not match" />
+                Confirm Password:<p:password id="pwd2" value="#{memberBean.member.password}" label="Password 2" required="true" validatorMessage="does not match" />
+                First Name:<h:inputText value="#{memberBean.member.firstName}" required="true" />
+                Last Name:<h:inputText value="#{memberBean.member.lastname}" required="true"/>
+                Gender:
+                <h:selectOneRadio value="#{memberBean.member.gender}">
+                    <f:selectItem itemValue="Male" itemLabel="Male" />
+                    <f:selectItem itemValue="Female" itemLabel="Female" />
+                </h:selectOneRadio>
+                Birth Date:  <p:calendar id="bDate"  value="#{memberBean.member.birthDate}" showOn="button" /> 
+                Email Address:<h:inputText id="email" value="#{memberBean.member.email}" required="true" label="Email" validatorMessage="#{memberBean.member.email} is not valid">
+                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                </h:inputText>
                 Street:<h:inputText value="#{memberBean.address.street}"/>
-                City:<h:inputText value="#{memberBean.address.city}"/>
-                State:<h:inputText value="#{memberBean.address.state}"/>
+                City:<h:inputText value="#{memberBean.address.city}" required="true"/>
+                State: <p:selectOneMenu id="state" value="#{memberBean.address.state}"   style="width:150px">
+                        <f:selectItem itemLabel="Select State" itemValue=""/>
+                        <f:selectItems value="#{memberBean.states}" />
+                    </p:selectOneMenu>    
                 Zip:<h:inputText value="#{memberBean.address.zip}"/>
             </h:panelGrid>
             <h:commandButton value="Save" action="#{memberBean.save}"/>
         </h:form>
     </ui:define>
-    
+
 </ui:composition>

@@ -5,6 +5,7 @@
  */
 package controller;
 
+import util.TempStorage;
 import ejb.UserFacade;
 import java.io.IOException;
 import java.io.Serializable;
@@ -17,7 +18,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.Query;
-import model.Member;
+import model.MemberAccount;
 import model.UserAccount;
 
 /**
@@ -34,7 +35,7 @@ public class SignOnController implements Serializable {
     @EJB
     private UserFacade ejbUserFacade;
 
-    private Member member;
+    private MemberAccount member;
 
     public String getUserName() {
         return userName;
@@ -60,7 +61,7 @@ public class SignOnController implements Serializable {
         this.errorMessage = errorMessage;
     }
 
-    public Member getMember() {
+    public MemberAccount getMember() {
         return member;
     }
 
@@ -70,11 +71,7 @@ public class SignOnController implements Serializable {
 //            return "AdminWelcome";
         }
 
-        String jpql = "SELECT c FROM UserAccount c WHERE c.userName = :custName AND c.password = :pass";
-        Query query = ejbUserFacade.getEntityManager().createQuery(jpql, UserAccount.class);
-        query.setParameter("custName", getUserName());
-        query.setParameter("pass", getPassword());
-        List<Member> queryList = query.getResultList();
+        List<MemberAccount> queryList = ejbUserFacade.validateUser(getUserName(), getPassword());
         if (!(queryList.isEmpty())) {
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
             try {

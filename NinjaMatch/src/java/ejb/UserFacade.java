@@ -5,9 +5,12 @@
  */
 package ejb;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import model.MemberAccount;
 import model.UserAccount;
 
 /**
@@ -16,6 +19,7 @@ import model.UserAccount;
  */
 @Stateless
 public class UserFacade extends AbstractFacade<UserAccount> {
+
     @PersistenceContext(unitName = "ninjamatchPU")
     private EntityManager em;
 
@@ -28,5 +32,13 @@ public class UserFacade extends AbstractFacade<UserAccount> {
         super(UserAccount.class);
     }
 
-    
+    public List<MemberAccount> validateUser(String username, String password) {
+        String jpql = "SELECT c FROM UserAccount c WHERE c.userName = :custName AND c.password = :pass";
+        Query query = em.createQuery(jpql, UserAccount.class);
+        query.setParameter("custName", username);
+        query.setParameter("pass", password);
+        List<MemberAccount> queryList = query.getResultList();
+        return queryList;
+    }
+
 }

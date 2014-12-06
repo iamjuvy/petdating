@@ -32,7 +32,7 @@ public class Photo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date uploadDate;
     @ManyToOne
-    private Member member;
+    private MemberAccount member;
 
     /**
      * @return the id
@@ -79,14 +79,14 @@ public class Photo implements Serializable {
     /**
      * @return the member
      */
-    public Member getMember() {
+    public MemberAccount getMember() {
         return member;
     }
 
     /**
      * @param member the member to set
      */
-    public void setMember(Member member) {
+    public void setMember(MemberAccount member) {
         this.member = member;
     }
     
