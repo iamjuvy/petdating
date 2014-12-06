@@ -20,6 +20,11 @@ import org.codehaus.jackson.map.ObjectMapper;
  */
 public class GoogleGeocode {
 
+    public Location geocodeParser(String geoCode) {
+        String[] points = geoCode.split(",");
+        return new Location(points[0], points[1]);
+    }
+
     public enum Measurement {
 
         MILES,
@@ -46,7 +51,7 @@ public class GoogleGeocode {
     }
 
     private double calculateDistance(double lat1, double lng1, double lat2, double lng2, Measurement m) {
-       
+
         double radius = EARTH_RADIUS_Mi;
         if (m == Measurement.KILOMETER) {
             radius = EARTH_RADIUS_KM;

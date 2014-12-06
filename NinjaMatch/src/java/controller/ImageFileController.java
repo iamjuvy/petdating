@@ -5,9 +5,7 @@
  */
 package controller;
 
-import util.TempStorage;
 import ejb.PhotoFacade;
-import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import util.DateUtil;
 
 /**
  *
@@ -34,43 +33,46 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean(name = "imageBean")
 @SessionScoped
 public class ImageFileController implements Serializable {
-
+    
     @EJB
     private PhotoFacade ejbPhotoFacade;
-
-    private final TempStorage t = TempStorage.getInstance();
+    
+    @EJB
+    private TempCache t;
+    
+    private DateUtil dateUtil = DateUtil.getInstance();
     private StreamedContent streamedContent;
     private StreamedContent currentPicture;
     private UploadedFile file;
     private MemberAccount member;
     private boolean bool = false;
     private byte[] bytes;
-
+    
     @PostConstruct
     void init() {
         streamedContent = null;
     }
-
+    
     public UploadedFile getFile() {
         return file;
     }
-
+    
     public void setFile(UploadedFile file) {
         this.file = file;
         bool = true;
     }
-
+    
     public boolean isBool() {
         return bool;
     }
-
+    
     public void setBool(boolean bool) {
         this.bool = bool;
     }
-
+    
     public void upload() {
         if (file != null) {
-
+            
             FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
             Photo photo = new Photo();
@@ -82,17 +84,18 @@ public class ImageFileController implements Serializable {
             streamedContent = getStreamed(bytes);
             photo.setImage(bytes);
             photo.setMember(t.getMember());
-
+            photo.setUploadDate(dateUtil.getCurrentDate());
+            
             ejbPhotoFacade.create(photo);
-
+            
         }
     }
-
+    
     public StreamedContent getStreamedContent() {
         streamedContent = getStreamed(bytes);
         return streamedContent;
     }
-
+    
     public StreamedContent getCurrentPicture() {
         Photo p = ejbPhotoFacade.getCurrentImage(t.getMember());
         if (p != null) {
@@ -100,10 +103,10 @@ public class ImageFileController implements Serializable {
         } else {
             currentPicture = null;
         }
-
+        
         return currentPicture;
     }
-
+    
     private StreamedContent getStreamed(byte[] bytes) {
         StreamedContent foto = null;
         try {
@@ -113,7 +116,7 @@ public class ImageFileController implements Serializable {
         }
         return foto;
     }
-
+    
     private byte[] convertToBytes(InputStream is) {
         byte[] conBytes = null;
         try {
@@ -123,5 +126,5 @@ public class ImageFileController implements Serializable {
         }
         return conBytes;
     }
-
+    
 }

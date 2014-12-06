@@ -5,7 +5,6 @@
  */
 package controller;
 
-import util.TempStorage;
 import ejb.MemberFacade;
 import ejb.UserFacade;
 import java.io.IOException;
@@ -36,6 +35,9 @@ public class MemberController implements Serializable {
 
     @EJB
     private UserFacade ejbUserFacade;
+    
+    @EJB
+    private TempCache t;
 
     private final DateUtil dateUtil = DateUtil.getInstance();
     private final GoogleGeocode geocoder = GoogleGeocode.getInstance();
@@ -173,7 +175,7 @@ public class MemberController implements Serializable {
             } catch (IOException ex) {
 //                Logger.getLogger(this.class.getName()).log(Level.SEVERE, null, ex);
             }
-            TempStorage.getInstance().setMember(queryList.get(0));
+            t.setMember(queryList.get(0));
         }
     }
 }

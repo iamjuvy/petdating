@@ -5,21 +5,16 @@
  */
 package controller;
 
-import util.TempStorage;
 import ejb.UserFacade;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.persistence.Query;
 import model.MemberAccount;
-import model.UserAccount;
 
 /**
  *
@@ -34,6 +29,9 @@ public class SignOnController implements Serializable {
     private String errorMessage;
     @EJB
     private UserFacade ejbUserFacade;
+
+    @EJB
+    private TempCache t;
 
     private MemberAccount member;
 
@@ -79,17 +77,17 @@ public class SignOnController implements Serializable {
             } catch (IOException ex) {
 //                Logger.getLogger(this.class.getName()).log(Level.SEVERE, null, ex);
             }
-           TempStorage.getInstance().setMember(queryList.get(0));
+            t.setMember(queryList.get(0));
         }
     }
-    
-    public void register(){
+
+    public void register() {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-            try {
-                ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_registration.xhtml");
-            } catch (IOException ex) {
+        try {
+            ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_registration.xhtml");
+        } catch (IOException ex) {
 //                Logger.getLogger(this.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        }
     }
 
 }

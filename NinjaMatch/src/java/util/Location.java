@@ -10,27 +10,41 @@ package util;
  * @author FrancisAerol
  */
 public class Location {
- 
- private String lat;
- 
- private String lng;
 
- public String getLat() {
-  return lat;
- }
+    private String lat;
 
- public void setLat(String lat) {
-  this.lat = lat;
- }
+    private String lng;
 
- public String getLng() {
-  return lng;
- }
+    public Location() {
+    }
 
- public void setLng(String lng) {
-  this.lng = lng;
- }
- 
- 
+    public Location(String lat, String lng) {
+        this.lat = lat;
+        this.lng = lng;
+    }
+
+    public double getDLat() {
+        return Double.parseDouble(lat);
+    }
+
+    public double getDLng() {
+        return Double.parseDouble(lng);
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
 
 }
