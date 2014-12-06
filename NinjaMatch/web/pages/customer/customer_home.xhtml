@@ -9,25 +9,33 @@
     <ui:define name="metadata">
 
     </ui:define>
+
     <ui:define name="content">
-        content
-    </ui:define>
-    <ui:define name="west">
-        <h:form>    
-
-            <p:menu>
-                <p:menuitem value="Save" actionListener="#{menuView.save}"  icon="ui-icon-disk"/>
-                <p:menuitem value="Update" actionListener="#{menuView.update}" icon="ui-icon-arrowrefresh-1-w"/>
-            </p:menu>
-            <p:menu>
-                <p:menuitem value="Delete" actionListener="#{menuView.delete}" ajax="false" icon="ui-icon-close"/>
-            </p:menu>
-            <p:menu>
-                <p:menuitem value="External" url="http://www.primefaces.org" icon="ui-icon-home"/>
-                <p:menuitem value="Internal"  icon="ui-icon-star"/>
-            </p:menu>
-
+        <p:growl id="messages" showDetail="true" />
+        <p:graphicImage  cache="false" style="width:150px;height:150px;" value="#{imageBean.streamedContent}" id="refresh"  />
+        <h:form enctype="multipart/form-data">
+            <br />
+            <p:fileUpload value="#{imageBean.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  mode="simple" update="refresh btnBool"/>
+            <br />
+            <p:commandButton id="btnBool" value="Upload" ajax="false" actionListener="#{imageBean.upload}" disabled="#{imageBean.bool}"/>
         </h:form>
     </ui:define>
 
+    <ui:define name="west">
+        <h:form>    
+            <p:menu>
+                <p:submenu label="Profile">
+                    <p:menuitem value="Home"  icon="ui-icon-home"/>
+                </p:submenu>
+                <p:submenu label="Match">
+                    <p:menuitem value="Matches"  icon="ui-icon-star"/>
+                    <p:menuitem value="Delete" icon="ui-icon-close"/>
+                </p:submenu>
+                <p:submenu label="Navigations">
+                    <p:menuitem value="External"  />
+                    <p:menuitem value="Internal" icon="ui-icon-star"/>
+                </p:submenu>
+            </p:menu>
+        </h:form>
+    </ui:define>
 </ui:composition>

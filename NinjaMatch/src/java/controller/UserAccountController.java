@@ -29,6 +29,7 @@ import model.UserAccount;
 public class UserAccountController implements Serializable {
 
     private UserAccount user;
+    
     private Address address;
     @EJB
     private UserFacade ejbUser;

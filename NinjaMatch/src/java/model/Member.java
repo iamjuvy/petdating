@@ -7,6 +7,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,6 +46,13 @@ public class Member extends UserAccount implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "VALUE")
     private List<Ethnicity> ethnicities = new ArrayList();
+
+    public Member() {
+    }
+
+    public Member(String userName, String password, String firstName, String lastname, String gender, Date birthDate, String email, Date registeredDate) {
+        super(userName, password, firstName, lastname, gender, birthDate, email, registeredDate);
+    }
 
     /**
      * @return the age

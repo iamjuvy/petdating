@@ -11,15 +11,15 @@
         <p:panel id="login" styleClass="centered">
             <h:form>
                 <p:outputLabel for="username" value="Username: "/>
-                <p:inputText id="username"/>
+                <p:inputText id="username" value="#{signOnBean.userName}"/>
                 <br />
                 <p:outputLabel for="password" value="Password: " />
-                <p:password id="password" />
+                <p:password id="password" value="#{signOnBean.password}"/>
                 <br/>
                 <br />
-                <p:commandButton value="Log-in" action="#{loginView.login}" />
+                <p:commandButton value="Log-in" action="#{signOnBean.verifyPassword}" />
                 <br/>
-                <p:commandLink value="Register" action="#{loginView.register}" />
+                <p:commandLink value="Register" action="#{signOnBean.register}" />
             </h:form>
         </p:panel> 
     </h:body>

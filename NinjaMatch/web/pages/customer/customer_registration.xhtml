@@ -10,10 +10,24 @@
       
     </ui:define>
     <ui:define name="content">
-     content
-    </ui:define>
-    <ui:define name="west">
-      west
+        
+            <h:form>
+            <h:panelGrid columns="2">
+                User Name:<h:inputText value="#{memberBean.member.userName}" />
+                Password:<h:inputText value="#{memberBean.member.password}" />
+                First Name:<h:inputText value="#{memberBean.member.firstName}" />
+                Last Name:<h:inputText value="#{memberBean.member.lastname}" />
+                Gender:<h:inputText value="#{memberBean.member.gender}" />
+                Birth Date:<h:inputText converter="#{userConverter}" value="#{memberBean.member.birthDate}"/>
+                Email Address<h:inputText value="#{memberBean.member.email}"/>
+                Registered Date:<h:inputText converter="#{userConverter}" value="#{memberBean.member.registeredDate}"/>
+                Street:<h:inputText value="#{memberBean.address.street}"/>
+                City:<h:inputText value="#{memberBean.address.city}"/>
+                State:<h:inputText value="#{memberBean.address.state}"/>
+                Zip:<h:inputText value="#{memberBean.address.zip}"/>
+            </h:panelGrid>
+            <h:commandButton value="Save" action="#{memberBean.save}"/>
+        </h:form>
     </ui:define>
     
 </ui:composition>
