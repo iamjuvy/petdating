@@ -15,7 +15,7 @@ import model.MemberAccount;
  */
 @Singleton
 public class TempCache {
-
+    
     private MemberAccount member;
 
     @PostConstruct
@@ -27,8 +27,6 @@ public class TempCache {
         this.member = member;
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
     public MemberAccount getMember() {
         return member;
     }

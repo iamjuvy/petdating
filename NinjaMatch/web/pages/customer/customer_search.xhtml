@@ -11,9 +11,27 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:form>
-            <p:commandButton value="Near Me" action="#{searchBean.searchNearMe}" update="map" />
-            <p:gmap id="map" center="#{searchBean.coords}" zoom="#{searchBean.zoom}" type="HYBRID" style="width:100%;height:400px" model="#{searchBean.simpleModel}" />
+
+
+        <h:form id="searchForm" enctype="multipart/form-data">
+
+            <p:fieldset legend="Match by Location" toggleable="true" toggleSpeed="500">
+                <p:commandButton value="Near Me" action="#{searchBean.searchNearMe}" update="map" />
+                <p:gmap  id="map" fitBounds="true" center="#{searchBean.coords}" zoom="#{searchBean.zoom}" type="HYBRID" style="width:100%;height:400px" model="#{searchBean.simpleModel}" >
+                    <p:ajax event="overlaySelect" listener="#{searchBean.onMarkerSelect}" />
+                    <p:gmapInfoWindow id="infoWindow">
+                        <p:outputPanel style="text-align: center; display: block; margin: auto">
+                            <p:graphicImage cache="false" value="#{searchBean.searchMemberImg}" style="width:150px;height:150px;"/>
+                            <h:outputText value="#{searchBean.searchMember.firstName}" />
+
+                        </p:outputPanel>
+                    </p:gmapInfoWindow>
+                </p:gmap>
+            </p:fieldset>
+            <p:fieldset legend="Match by Preference" toggleable="true" toggleSpeed="500">
+
+            </p:fieldset>
+
         </h:form>
     </ui:define>
 

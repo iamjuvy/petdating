@@ -28,11 +28,10 @@ import model.UserAccount;
 @SessionScoped
 public class UserAccountController implements Serializable {
 
-    private UserAccount user;
-    
-    private Address address;
     @EJB
     private UserFacade ejbUser;
+    private UserAccount user;
+    private Address address;
 
     public UserAccount getUser() {
         if (user == null) {
@@ -77,7 +76,7 @@ public class UserAccountController implements Serializable {
         for (UserAccount acct : queryList) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Test Selected " + acct.getFirstName(), ""));
         }
-        
+
         ejbUser.edit(user);
     }
 }

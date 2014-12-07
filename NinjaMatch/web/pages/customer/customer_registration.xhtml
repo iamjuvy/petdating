@@ -31,9 +31,9 @@
                 Street:<h:inputText value="#{memberBean.address.street}"/>
                 City:<h:inputText value="#{memberBean.address.city}" required="true"/>
                 State: <p:selectOneMenu id="state" value="#{memberBean.address.state}"   style="width:150px">
-                        <f:selectItem itemLabel="Select State" itemValue=""/>
-                        <f:selectItems value="#{memberBean.states}" />
-                    </p:selectOneMenu>    
+                    <f:selectItem itemLabel="Select State" itemValue=""/>
+                    <f:selectItems value="#{memberBean.states}" />
+                </p:selectOneMenu>    
                 Zip:<h:inputText value="#{memberBean.address.zip}"/>
             </h:panelGrid>
             <h:commandButton value="Save" action="#{memberBean.save}"/>

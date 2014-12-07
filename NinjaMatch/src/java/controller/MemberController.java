@@ -32,26 +32,24 @@ public class MemberController implements Serializable {
 
     @EJB
     private MemberFacade ejbMemberFacade;
-
     @EJB
     private UserFacade ejbUserFacade;
-    
     @EJB
     private TempCache t;
-
-    private final DateUtil dateUtil = DateUtil.getInstance();
-    private final GoogleGeocode geocoder = GoogleGeocode.getInstance();
+    @EJB
+    private DateUtil dateUtil;
+    @EJB
+    private GoogleGeocode geocoder;
     
     private MemberAccount member;
+    private ArrayList<String> states;
+
     private Address address;
     private String month;
     private String year;
     private String day;
 
-    private ArrayList<String> states;
-    private String state;
-
-     @PostConstruct
+    @PostConstruct
     public void init() {
         states = new ArrayList<>();
         states.add("Alabama");
@@ -105,7 +103,7 @@ public class MemberController implements Serializable {
         states.add("Wisconsin");
         states.add("Wyoming");
     }
-    
+
     public Address getAddress() {
         if (address == null) {
             address = new Address();
@@ -158,11 +156,11 @@ public class MemberController implements Serializable {
                 getMember().getEmail(),
                 dateUtil.getCurrentDate());
 
-        String geoCode = geocoder.getGeoCode(getAddress().getStreet()+" "+getAddress().getCity() +" "+getAddress().getState());
+        String geoCode = geocoder.getGeoCode(getAddress().getStreet() + " " + getAddress().getCity() + " " + getAddress().getState());
         address = new Address(getAddress().getStreet(),
                 getAddress().getCity(),
                 getAddress().getState(),
-                getAddress().getZip(),geoCode);
+                getAddress().getZip(), geoCode);
         getMember().setAddress(address);
         ejbMemberFacade.create(member);
         System.out.println("Save Successfully!");

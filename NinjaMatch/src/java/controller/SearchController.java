@@ -13,12 +13,14 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import model.MemberAccount;
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
-import util.DateUtil;
 import util.GoogleGeocode;
+import util.ImageUtil;
 import util.Location;
 
 /**
@@ -31,18 +33,21 @@ public class SearchController implements Serializable {
 
     @EJB
     private MemberFacade ejbMemberFacade;
-
+    @EJB
+    private ImageUtil imageUtil;
     @EJB
     private TempCache t;
-    private MapModel simpleModel;
+    @EJB
+    private GoogleGeocode geocoder;
 
-    private int zoom;
+    private MapModel simpleModel;
+    private Marker marker;
+    private MemberAccount searchMember;
+    private MemberAccount member;
+    private StreamedContent searchMemberImg;
     private String coords;
 
-    private final DateUtil dateUtil = DateUtil.getInstance();
-    private final GoogleGeocode geoUtil = GoogleGeocode.getInstance();
-
-    private MemberAccount member;
+    private int zoom;
 
     @PostConstruct
     void init() {
@@ -56,13 +61,40 @@ public class SearchController implements Serializable {
         simpleModel = new DefaultMapModel();
         List<MemberAccount> res = ejbMemberFacade.getStateMembers(member);
         coords = member.getAddress().getGeoCode();
-        //add otherstuff here
-        zoom = 13;
 
+        for (MemberAccount mem : res) {
+            Location loc;
+            LatLng latlng;
+
+            String detail = mem.getFirstName() + " " + mem.getLastname() + ":" + mem.getAddress().getStreet() + mem.getAddress().getCity();
+            if (member.getId().equals(mem.getId())) {
+                loc = geocoder.geocodeParser(mem.getAddress().getGeoCode());
+                latlng = new LatLng(loc.getDLat(), loc.getDLng());
+                simpleModel.addOverlay(new Marker(latlng, detail, mem, "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"));
+            } else {
+                loc = geocoder.geocodeParser(mem.getAddress().getGeoCode());
+                latlng = new LatLng(loc.getDLat(), loc.getDLng());
+                simpleModel.addOverlay(new Marker(latlng, detail, mem, "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"));
+            }
+        }
+
+        zoom = 8;
+
+    }
+
+    public StreamedContent getSearchMemberImg() {
+        byte[] bytes = searchMember.getPhotos().get(0).getImage();
+        searchMemberImg = imageUtil.getStreamed(bytes);
+        return searchMemberImg;
     }
 
     public MapModel getSimpleModel() {
         return simpleModel;
+    }
+
+    public void onMarkerSelect(OverlaySelectEvent event) {
+        marker = (Marker) event.getOverlay();
+        searchMember = (MemberAccount) marker.getData();
     }
 
     public int getZoom() {
@@ -79,6 +111,18 @@ public class SearchController implements Serializable {
 
     public void setCoords(String coords) {
         this.coords = coords;
+    }
+
+    public Marker getMarker() {
+        return marker;
+    }
+
+    public MemberAccount getSearchMember() {
+        return searchMember;
+    }
+
+    public void setSearchMember(MemberAccount searchMember) {
+        this.searchMember = searchMember;
     }
 
 }

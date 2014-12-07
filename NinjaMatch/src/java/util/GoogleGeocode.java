@@ -12,18 +12,25 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  *
  * @author FrancisAerol
  */
+@Singleton
 public class GoogleGeocode {
 
-    public Location geocodeParser(String geoCode) {
-        String[] points = geoCode.split(",");
-        return new Location(points[0], points[1]);
+    @PostConstruct
+    void init() {
+        googleGeocode = new GoogleGeocode();
     }
+    private static final double EARTH_RADIUS_Mi = 3956.0;
+    private static final double EARTH_RADIUS_KM = 6367.0;
+    private static final String URL = "http://maps.googleapis.com/maps/api/geocode/json";
+    private GoogleGeocode googleGeocode;
 
     public enum Measurement {
 
@@ -31,8 +38,9 @@ public class GoogleGeocode {
         KILOMETER
     }
 
-    private static final double EARTH_RADIUS_Mi = 3956.0;
-    private static final double EARTH_RADIUS_KM = 6367.0;
+    protected GoogleGeocode getGoogleGeocode() {
+        return googleGeocode;
+    }
 
     private static double ToRadian(double val) {
         return val * (Math.PI / 180);
@@ -42,12 +50,16 @@ public class GoogleGeocode {
         return ToRadian(val2) - ToRadian(val1);
     }
 
+    public Location geocodeParser(String geoCode) {
+        String[] points = geoCode.split(",");
+        return new Location(points[0], points[1]);
+    }
+
     public String calculateDistance(String geoCode1, String geoCode2, Measurement m) {
         String[] pointA = geoCode1.split(",");
         String[] pointB = geoCode2.split(",");
         double result = calculateDistance(Double.parseDouble(pointA[0]), Double.parseDouble(pointA[1]), Double.parseDouble(pointB[0]), Double.parseDouble(pointB[1]), m);
         return String.valueOf(result);
-
     }
 
     private double calculateDistance(double lat1, double lng1, double lat2, double lng2, Measurement m) {
@@ -60,26 +72,9 @@ public class GoogleGeocode {
                 + Math.cos(ToRadian(lat1)) * Math.cos(ToRadian(lat2)) * Math.pow(Math.sin((DiffRadian(lng1, lng2)) / 2.0), 2.0)))));
     }
 
-    private GoogleGeocode() {
-        //singleton
-    }
-
-    private static GoogleGeocode _instance;
-
-    public static GoogleGeocode getInstance() {
-        if (_instance == null) {
-            _instance = new GoogleGeocode();
-        }
-        return _instance;
-    }
-
-    private static final String URL = "http://maps.googleapis.com/maps/api/geocode/json";
-
     protected GoogleResponse convertToLatLong(String fullAddress) throws IOException {
-
         URL url = new URL(URL + "?address="
                 + URLEncoder.encode(fullAddress, "UTF-8") + "&sensor=false");
-        // Open the Connection
         URLConnection conn = url.openConnection();
 
         InputStream in = conn.getInputStream();
@@ -91,7 +86,6 @@ public class GoogleGeocode {
     }
 
     protected GoogleResponse convertFromLatLong(String latlongString) throws IOException {
-
         URL url = new URL(URL + "?latlng="
                 + URLEncoder.encode(latlongString, "UTF-8") + "&sensor=false");
         // Open the Connection

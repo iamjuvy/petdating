@@ -11,26 +11,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
 
 /**
  *
  * @author FrancisAerol
  */
+@Singleton
 public class DateUtil {
 
-    private DateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
+    private DateUtil dateUtil;
 
-    private DateUtil() {
-        //singleton
-    }
+    private final DateFormat FORMATTER = new SimpleDateFormat("MM-dd-yyyy");
 
-    private static DateUtil _instance;
-
-    public static DateUtil getInstance() {
-        if (_instance == null) {
-            _instance = new DateUtil();
-        }
-        return _instance;
+    @PostConstruct
+    void init() {
+        dateUtil = new DateUtil();
     }
 
     public Date getCurrentDate() {
@@ -38,13 +35,13 @@ public class DateUtil {
     }
 
     public String getCurrentDateString() {
-        return formatter.format(new Date());
+        return FORMATTER.format(new Date());
     }
 
     public Date convertBirthday(String month, String day, String year) {
         Date parsedDate = null;
         try {
-            parsedDate = formatter.parse(month + "-" + day + "-" + year);
+            parsedDate = FORMATTER.parse(month + "-" + day + "-" + year);
         } catch (ParseException ex) {
             Logger.getLogger(DateUtil.class.getName()).log(Level.SEVERE, null, ex);
         }

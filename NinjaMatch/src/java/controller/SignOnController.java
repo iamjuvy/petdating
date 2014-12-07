@@ -24,16 +24,16 @@ import model.MemberAccount;
 @SessionScoped
 public class SignOnController implements Serializable {
 
-    private String userName;
-    private String password;
-    private String errorMessage;
     @EJB
     private UserFacade ejbUserFacade;
-
     @EJB
     private TempCache t;
 
     private MemberAccount member;
+
+    private String userName;
+    private String password;
+    private String errorMessage;
 
     public String getUserName() {
         return userName;
@@ -66,7 +66,7 @@ public class SignOnController implements Serializable {
     public void verifyPassword() {
 
         if (userName.equals("admin") && password.equals("admin")) {
-//            return "AdminWelcome";
+            //TODO: insert admin part here
         }
 
         List<MemberAccount> queryList = ejbUserFacade.validateUser(getUserName(), getPassword());
@@ -75,7 +75,7 @@ public class SignOnController implements Serializable {
             try {
                 ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_home.xhtml");
             } catch (IOException ex) {
-//                Logger.getLogger(this.class.getName()).log(Level.SEVERE, null, ex);
+
             }
             t.setMember(queryList.get(0));
         }
@@ -86,7 +86,7 @@ public class SignOnController implements Serializable {
         try {
             ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_registration.xhtml");
         } catch (IOException ex) {
-//                Logger.getLogger(this.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
 
