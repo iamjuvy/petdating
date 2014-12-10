@@ -176,4 +176,34 @@ public class MemberController implements Serializable {
             t.setMember(queryList.get(0));
         }
     }
+    public void update() {
+        member = new MemberAccount(getMember().getUserName(),
+                getMember().getPassword(),
+                getMember().getFirstName(),
+                getMember().getLastname(),
+                getMember().getGender(),
+                getMember().getBirthDate(),
+                getMember().getEmail(),
+                dateUtil.getCurrentDate());
+
+        String geoCode = geocoder.getGeoCode(getAddress().getStreet() + " " + getAddress().getCity() + " " + getAddress().getState());
+        address = new Address(getAddress().getStreet(),
+                getAddress().getCity(),
+                getAddress().getState(),
+                getAddress().getZip(), geoCode);
+        getMember().setAddress(address);
+        ejbMemberFacade.edit(member);
+        System.out.println("Save Successfully!");
+
+        List<MemberAccount> queryList = ejbUserFacade.validateUser(getMember().getUserName(), getMember().getPassword());
+        if (!(queryList.isEmpty())) {
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            try {
+                ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_edit.xhtml");
+            } catch (IOException ex) {
+//                Logger.getLogger(this.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            t.setMember(queryList.get(0));
+        }
+    }
 }
