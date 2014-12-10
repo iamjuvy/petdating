@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
+      >
+
+
+    <f:view contentType="text/html" id="fview">
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title> <ui:insert name="title" /></title>
+
+        <h:head>
+            <f:metadata>
+                <ui:insert name="metadata" />
+            </f:metadata>
+            <h:outputStylesheet name="css/bootstrap.css" />
+            <h:outputStylesheet name="css/bootstrap-theme.css" />
+            <h:outputStylesheet name="css/admin.css" />
+        </h:head>
+
+        <h:body>
+
+            <h:panelGroup layout="block" id="page"> 
+                <h:panelGroup layout="block" id="header"> 
+                    <ui:insert name="header" />
+                </h:panelGroup>
+                <h:panelGroup layout="block">
+                     <h:panelGroup layout="block" id="west"> 
+                        <ui:insert name="west" />fdfdf
+                   </h:panelGroup>
+                   <h:panelGroup layout="block" id="content"> 
+                        <ui:insert name="content" />
+                   </h:panelGroup>
+                    
+                   <h:panelGroup layout="block" class="clearfix"> </h:panelGroup>
+                </h:panelGroup>
+
+            </h:panelGroup>
+        </h:body>
+    </f:view>
+</html>
+
