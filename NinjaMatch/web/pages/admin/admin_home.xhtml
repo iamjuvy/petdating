@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/template/admin_template.xhtml">
+    
+    <ui:define name="content">
+        <div id="pictureHeader">
+            <h:graphicImage library="images" name="habesha.jpg" style="height:10em" />
+            <div id="title">Ninja Match</div>
+            <h:form>
+                <div id="links">
+                    <h:commandLink value="Logout" action="index" style="margin-right:1em"/>
+                </div>
+            </h:form>
+        </div>
+    </ui:define>
+
+    <ui:define name="west">
+        west
+    </ui:define>
+
+</ui:composition>
+
+<!--<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/template/admin_template.xhtml">
+
+    <ui:define name="metadata">
+
+    </ui:define>
+
+    <ui:define name="content">
+        #TODO: Recent Searches will go here
+    </ui:define>
+
+    <ui:define name="west">
+        <h:form>  
+            <p:menu>
+                <p:submenu label="About us">
+                    <p:menuitem value="About us"/>
+                </p:submenu>
+                <p:submenu label="Contact us">
+                    <p:menuitem value="Contact us"/>
+                </p:submenu>
+                <p:submenu label="Mails">
+                    <p:menuitem value="External"  />
+                    <p:menuitem value="Internal" icon="ui-icon-star"/>
+                </p:submenu>
+            </p:menu>
+        </h:form>
+    </ui:define>
+</ui:composition>-->
