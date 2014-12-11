@@ -7,12 +7,15 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import listener.AdminAccounntValidation;
 
 /**
  *
  * @author atan
  */
 @Entity
+@EntityListeners({AdminAccounntValidation.class})
 public class AdminAccount extends UserAccount implements Serializable {
 
     public AdminAccount() {

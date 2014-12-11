@@ -6,9 +6,14 @@
 package ejb;
 
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptor;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import model.AdminAccount;
+import model.UserAccount;
+import service.AdminLogger;
 
 /**
  *
@@ -28,4 +33,15 @@ public class AdminAccountFacade extends AbstractFacade<AdminAccount> {
         super(AdminAccount.class);
     }
     
+    @Interceptors(AdminLogger.class)
+    public AdminAccount findByUsername(String username){
+        try{
+            String jpql = "SELECT c FROM UserAccount c WHERE c.userName LIKE :username";
+            Query query = getEntityManager().createQuery(jpql, UserAccount.class);
+            query.setParameter("username", username);
+            return (AdminAccount)query.getSingleResult();
+        }catch(Exception e){
+            return null;
+        }
+    }
 }
