@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/template/admin_template.xhtml">
+    <ui:define name="header">
+
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <h3>Administrators List</h3>
+
+            <h:dataTable var="u" class="table table-hove" value="#{adminController.allAdmins}" >
+                <h:column>
+                    <f:facet name="header">First name</f:facet>
+                    <h:outputText value="#{u.firstName}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Last name</f:facet>
+                    <h:outputText value="#{u.lastname}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Username</f:facet>
+                    <h:outputText value="#{u.userName}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Gender</f:facet>
+                    <h:outputText value="#{u.gender}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+                    <h:commandButton class="btn btn-sm" value="Edit" action="#{manageCourseView.updateCourseView(course)}"/> |
+                    <h:commandButton class="btn btn-sm btn-danger" value="Delete" action="#{manageCourseView.deleteCourse(course)}"/>                      
+                </h:column>               
+            </h:dataTable>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="west">
+        <h:form>
+            <div class="list-group">
+                <h:commandLink class="list-group-item" action="/pages/admin/home.xhtml" value="Show Reports" />
+                <h:commandLink class="list-group-item active" value="Manage Admins" />
+                <h:commandLink class="list-group-item" action="/pages/admin/manage_member.xhtml" value="Manage Members" />
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

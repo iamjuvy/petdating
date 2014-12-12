@@ -22,27 +22,54 @@
             src="http://maps.google.com/maps/api/js?sensor=false"></script>
             <h:outputStylesheet name="css/bootstrap.css" />
             <h:outputStylesheet name="css/bootstrap-theme.css" />
-            <!--<h:outputStylesheet name="css/admin.css" />-->
+            <h:outputStylesheet name="css/admin.css" />
         </h:head>
 
         <h:body>
+            <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+                <div class="page-header">
+                    <p:layoutUnit position="north" size="100" id="north" styleClass="ui-layout-unit">
+                        <h:form class="form-inline">
+                            <div style="display: inline; float: right; ">
+                                <p:menubar>
+                                    <p:submenu label="Your Account" icon="ui-icon-document">
+                                        <p:menuitem value="Edit Profile" outcome="/pages/admin/home.xhtml" />
+                                    </p:submenu>
 
-            <h:panelGroup layout="block" id="page"> 
-                <h:panelGroup layout="block" id="header"> 
-                    <ui:insert name="header" />
-                </h:panelGroup>
-                <h:panelGroup layout="block">
-                     <h:panelGroup layout="block" id="west"> 
-                        <ui:insert name="west" />
-                   </h:panelGroup>
-                   <h:panelGroup layout="block" id="content"> 
+                                    <p:menuitem value="Sign Out" action="#{signonController.signout()}" icon="ui-icon-close" />
+                                </p:menubar>
+                            </div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div style="width:230px;">
+                                            <h:link outcome="/pages/admin/home.xhtml">
+                                                <h:graphicImage name="images/logo.png"  />
+                                            </h:link>
+                                            
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="height: 95px; width:500px; overflow: hidden" class="testing">
+                                            <h:graphicImage name="images/bar.jpg"  />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:form>
+                    </p:layoutUnit>
+                </div>
+
+                <p:layoutUnit position="west" id="west" resizable="false" style="height:580px;overflow:hidden;" size="225">
+                    <ui:insert name="west" />
+                </p:layoutUnit>
+
+                <p:layoutUnit styleClass="layoutUnitCenter" position="center">
+                    <h:form id="mainForm">
                         <ui:insert name="content" />
-                   </h:panelGroup>
-                    
-                   <h:panelGroup layout="block" class="clearfix"> </h:panelGroup>
-                </h:panelGroup>
-
-            </h:panelGroup>
+                    </h:form>
+                </p:layoutUnit>
+            </p:layout>
         </h:body>
     </f:view>
 </html>

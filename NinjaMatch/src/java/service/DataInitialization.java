@@ -43,6 +43,20 @@ public class DataInitialization {
                 admin.setAddress(new Address("1000 4 Street", "Fairfield", "IA", "52257"));
                 adminFacade.create(admin);
             }
+            
+            AdminAccount admin2 = adminFacade.findByUsername("admin2");
+            if (admin2 == null) {
+                admin2 = new AdminAccount();
+                admin2.setUserName("admin2");
+                admin2.setPassword("admin2");
+                admin2.setFirstName("Ninja2");
+                admin2.setLastname("Admin2");
+                admin2.setGender("Male");
+                admin2.setBirthDate(new Date());
+                admin2.setRegisteredDate(new Date());
+                admin2.setAddress(new Address("1000 4 Street", "Fairfield", "IA", "52257"));
+                adminFacade.create(admin2);
+            }
         } catch (Exception e) {
             System.err.println(e);
         }

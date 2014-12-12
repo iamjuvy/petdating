@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/template/admin_template.xhtml">
+    <ui:define name="header">
+
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
+                <p:chart type="pie" model="#{adminController.chartAgesModel}" style="width:400px;" />
+                <p:chart type="pie" model="#{adminController.chartGendersModel}" style="width:400px;" />
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="west">
+        <h:form>
+            <div class="list-group">
+                <h:commandLink class="list-group-item  active" value="Show Reports" />
+                <h:commandLink class="list-group-item" action="/pages/admin/manage_admin.xhtml" value="Manage Admins" />
+                <h:commandLink class="list-group-item" action="/pages/admin/manage_member.xhtml" value="Manage Members" />
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
