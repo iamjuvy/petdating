@@ -3,13 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/yyun/Documents/NetBeansProjects/ninja/NinjaMatch/web/pages/admin/admin_home.xhtml</file>
-            <file>file:/C:/Users/yyun/Documents/NetBeansProjects/ninja/NinjaMatch/src/java/model/AdminAccount.java</file>
-            <file>file:/C:/Users/yyun/Documents/NetBeansProjects/ninja/NinjaMatch/src/java/ejb/AdminAccountFacade.java</file>
-            <file>file:/C:/Users/yyun/Documents/NetBeansProjects/ninja/NinjaMatch/src/java/listener/PhotoCamView.java</file>
-            <file>file:/C:/Users/yyun/Documents/NetBeansProjects/ninja/NinjaMatch/src/java/service/AdminLogger.java</file>
-            <file>file:/C:/Users/yyun/Documents/NetBeansProjects/ninja/NinjaMatch/src/java/listener/AdminAccounntValidation.java</file>
-            <file>file:/C:/Users/yyun/Documents/NetBeansProjects/ninja/NinjaMatch/src/java/service/DataInitialization.java</file>
+            <file>file:/C:/Users/Isaiah/Documents/NetBeansProjects/ninja/NinjaMatch/web/pages/admin/admin_home.xhtml</file>
+            <file>file:/C:/Users/Isaiah/Documents/NetBeansProjects/ninja/NinjaMatch/web/resources/css/admin.css</file>
+            <file>file:/C:/Users/Isaiah/Documents/NetBeansProjects/ninja/NinjaMatch/web/pages/admin/admin_edit.xhtml</file>
+            <file>file:/C:/Users/Isaiah/Documents/NetBeansProjects/ninja/NinjaMatch/src/java/controller/SearchController.java</file>
+            <file>file:/C:/Users/Isaiah/Documents/NetBeansProjects/ninja/NinjaMatch/web/pages/customer/customer_edit.xhtml</file>
+            <file>file:/C:/Users/Isaiah/Documents/NetBeansProjects/ninja/NinjaMatch/web/pages/customer/customer_home.xhtml</file>
+            <file>file:/C:/Users/Isaiah/Documents/NetBeansProjects/ninja/NinjaMatch/src/java/controller/ImageFileController.java</file>
+            <file>file:/C:/Users/Isaiah/Documents/NetBeansProjects/ninja/NinjaMatch/src/java/controller/AdminController.java</file>
+            <file>file:/C:/Users/Isaiah/Documents/NetBeansProjects/ninja/NinjaMatch/web/template/admin_template.xhtml</file>
         </group>
     </open-files>
 </project-private>
