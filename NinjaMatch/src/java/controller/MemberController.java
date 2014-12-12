@@ -13,10 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import model.Address;
 import model.MemberAccount;
 import util.DateUtil;
@@ -206,4 +209,12 @@ public class MemberController implements Serializable {
             t.setMember(queryList.get(0));
         }
     }
+    public void validateUserId(FacesContext f, UIComponent c, Object obj){
+        String s=(String)obj;
+        System.out.println("Value of S"+s);
+        if(s.length()==0)
+            throw new ValidatorException(new FacesMessage("UserID cannot be empty."));  
+        if (ejbMemberFacade.isUserNameExist(s))
+            throw new ValidatorException(new FacesMessage("UserID is already used."));
+    }  
 }
