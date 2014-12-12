@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/template/customer_template.xhtml">
+
+    <ui:define name="metadata">
+
+    </ui:define>
+
+    <ui:define name="content">
+        <p:growl id="messages" showDetail="true" />
+        <h:form enctype="multipart/form-data">
+            <br />
+            <p:fileUpload value="#{imageBean.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  mode="simple"/>
+            <br />
+            <p:commandButton id="btnBool" value="Upload" ajax="false" actionListener="#{imageBean.upload}"/>
+            <h:panelGrid columns="2">
+                ID:<h:outputText value="#{adminController.admin.id}"/>
+                First Name:<h:inputText value="#{adminController.admin.firstName}" required="false" />
+                
+                Last Name:<h:outputText value="#{adminController.admin.lastname}"/>
+                Gender:
+                <h:selectOneRadio value="#{adminController.admin.gender}">
+                    <f:selectItem itemValue="Male" itemLabel="Male" />
+                    <f:selectItem itemValue="Female" itemLabel="Female" />
+                </h:selectOneRadio>
+                Email Address:<h:inputText id="email" value="#{adminController.admin.email}" required="true" label="Email" validatorMessage="#{memberBean.member.email} is not valid">
+                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                </h:inputText>
+                Birth Date:<h:outputText value="#{adminController.admin.birthDate}"/>
+                Address:<h:outputText value="#{adminController.admin.address}"/>
+                Registration Date:<h:outputText value="#{adminController.admin.registeredDate}"/>
+            </h:panelGrid>
+            <h:commandButton value="Update" action="#{adminController.save()}"/>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="west">
+        <h:form>  
+            <p:menu>
+                <p:submenu label="Home">
+                    <p:menuitem value="Edit Profile" outcome="/pages/admin/admin_edit" icon="ui-icon-person"/>
+                </p:submenu>
+            </p:menu>
+        </h:form>
+    </ui:define>
+</ui:composition>

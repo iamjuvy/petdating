@@ -4,56 +4,29 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-                template="/template/admin_template.xhtml">
-    <ui:define name="header">
+                template="/template/customer_template.xhtml">
+
+    <ui:define name="metadata">
 
     </ui:define>
 
     <ui:define name="content">
-        <h:form id="form">           
-            <p:growl id="msgs" showDetail="true" />
-
-            <h3 style="margin-top:0">About</h3>
-            <p:accordionPanel>
-                <p:tab title="lacey1979
-                       35 year old Female Seattle, WA, USA
-                       Seeking men 31-43 within 50 miles">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:graphicImage name="habesha.jpg" style="height:10em"/>
-                        <p:outputLabel value="Her Details"/>
-                        <p:outputLabel value="Relationship:Divorced"/> 
-                        <p:outputLabel value="Body Type:About average"/> 
-                        <p:outputLabel value="Height:5'3"/> 
-                        <p:outputLabel value="Faith:Spiritual but not religi…"/> 
-                        <p:outputLabel value="Wants Kids:Someday"/> 
-                        <p:outputLabel value="Ethnicity:White / Caucasian"/>
-                        <h:outputText
-                            value="I moved to fairfield in Feb 2014…" />
-                    </h:panelGrid>
-                </p:tab>
-                <p:tab title="lacey1979
-                       35 year old Female Seattle, WA, USA
-                       Seeking men 31-43 within 50 miles">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:graphicImage name="habesha.jpg" style="height: 10em" />
-                        <h:outputText value="Francis Ford Coppola's legendary..." />
-                    </h:panelGrid>
-                </p:tab>
-                <p:tab title="lacey1979
-                       35 year old Female Seattle, WA, USA
-                       Seeking men 31-43 within 50 miles">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:graphicImage name="habesha.jpg" style="height: 10em" />
-                        <h:outputText value="After a break of more than 15 years..." />
-                    </h:panelGrid>
-                </p:tab>
-            </p:accordionPanel>
-        </h:form>
+        <!--<p:chart type="line" model="" style="height:300px;"/>-->
     </ui:define>
 
     <ui:define name="west">
-        
+        <h:form>  
+            <p:menu>
+                <p:submenu label="Home">
+                    <p:menuitem value="Edit Profile" outcome="/pages/admin/admin_edit" icon="ui-icon-person"/>
+                </p:submenu>
+                <p:submenu label="Show Report">
+                    <p:menuitem value="Show report" outcome="/pages/customer/customer_registration"  icon="ui-icon-heart"/>
+                </p:submenu>
+                <p:submenu label="Mails">
+                    <p:menuitem value="Manage Users" action="admin_manage_users"  />
+                </p:submenu>
+            </p:menu>
+        </h:form>
     </ui:define>
-
 </ui:composition>
-

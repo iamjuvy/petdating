@@ -4,50 +4,59 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-                template="/template/admin_template.xhtml">
-    <ui:define name="content">
-        manage users
+                template="/template/template.xhtml">
+
+    <ui:define name="metadata">
+
     </ui:define>
-     <ui:define name="content">
+    <ui:define name="content">
 
         <h:form>
-             <p:tabView>
-                 <p:tab title="Registration">
-           
-            
-                     Email Address:<h:inputText id="email" value="#{adminController.admin.email}" required="true" label="Email" validatorMessage="#{memberBean.member.email} is not valid">
-                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-                </h:inputText>
-                User Name:<h:inputText value="#{adminController.admin.userName}" required="true" /><br/><br/>
-                Password:<p:password id="pwd1" value="#{adminController.admin.password}" match="pwd2" label="Password 1" required="true" validatorMessage="does not match" />
-                Confirm Password:<p:password id="pwd2" value="#{adminController.admin.password}" label="Password 2" required="true" validatorMessage="does not match" /><br/>
-                </p:tab>
-                 
-                 <p:message for="email" />
-                 <p:tab title="Registration">
-                First Name:<h:inputText value="#{adminController.admin.firstName}" required="true" />
-                Last Name:<h:inputText value="#{adminController.admin.lastname}" required="true"/><br/>
-                Gender:<h:selectOneRadio value="#{adminController.admin.gender}">
-                    <f:selectItem itemValue="Male" itemLabel="Male" />
-                    <f:selectItem itemValue="Female" itemLabel="Female" />
-                </h:selectOneRadio>
-                Birth Date:  <p:calendar id="bDate"  value="#{adminController.admin.birthDate}" showOn="button" /> 
-                 </p:tab>
-                 <p:tab title="Registration">
-                     Registration Date:<p:calendar id="regDate" value="#{adminController.admin.registeredDate}"/>
-                     ID<h:inputText value="#{adminController.admin.id}" required="true"/>
-                 </p:tab>
-                 <p:tab title="Profile picture">
-                     <h:form>
-                         <h:panelGrid columns="2" cellpadding="5">
-                             <p:photoCam widgetVar="pc" />
-                             <p:commandButton type="button" value="Capture" onclick="PF('pc').capture()"/>
-                         </h:panelGrid>
-                     </h:form>
-                 </p:tab>
-             </p:tabView>
-            
-            <h:commandButton value="Save" action="#{memberBean.save}"/>
+            <p:growl showDetail="true"/>
+
+            <p:dataTable var="emp" value="#{adminController.admin.firstName}" editable="true" style="margin-bottom:20px">
+                <f:facet name="header">
+                    Admin Manage Users
+                </f:facet>
+
+                <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdi}" update="" />
+                <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update="" />
+
+                <p:column headerText="ID">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{adminController.admin.id}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{adminController.admin.id}" style="width:100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="First Name">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{adminController.admin.firstName}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{adminController.admin.firstName}" style="width:100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Last Name">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{adminController.admin.lastname}"></h:outputText></f:facet>
+                        <f:facet name="input"><p:inputText value="#{adminController.admin.lastname}"></p:inputText></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Birth Date">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{adminController.admin.birthDate}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{adminController.admin.birthDate}" style="width:96%" label="Year"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Gender">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{adminController.admin.gender}" /></f:facet>
+                        <f:facet name="input">
+                            <h:selectOneMenu value="#{adminController.admin.gender}" style="width:100%">
+                                <f:selectItems value="#{adminController.admin.gender}" var="man" itemLabel="Male" itemValue="Female" />
+                            </h:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+            </p:dataTable>
         </h:form>
     </ui:define>
 </ui:composition>
