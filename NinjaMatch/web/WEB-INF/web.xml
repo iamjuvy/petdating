@@ -13,6 +13,15 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Faces Push</servlet-name>
+        <servlet-class>org.primefaces.push.PushServlet</servlet-class>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Push</servlet-name>
+        <url-pattern>/primepush/*</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
