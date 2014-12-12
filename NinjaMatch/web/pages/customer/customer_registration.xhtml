@@ -13,8 +13,12 @@
 
         <h:form>
             <p:message for="email" />
-            <h:panelGrid columns="2">
-                User Name:<h:inputText value="#{memberBean.member.userName}" required="true" />
+            <p:messages id="messages" />
+            <p:panelGrid columns="2">
+                User Name:<p:inputText  id="userid" value="#{memberBean.member.userName}" required="true" 
+                          validator="#{memberBean.validateUserId}">
+                <f:ajax event="blur" execute="@this" render="messages"/>
+                </p:inputText>   
                 Password:<p:password id="pwd1" value="#{memberBean.member.password}" match="pwd2" label="Password 1" required="true" validatorMessage="does not match" />
                 Confirm Password:<p:password id="pwd2" value="#{memberBean.member.password}" label="Password 2" required="true" validatorMessage="does not match" />
                 First Name:<h:inputText value="#{memberBean.member.firstName}" required="true" />
@@ -35,7 +39,7 @@
                     <f:selectItems value="#{memberBean.states}" />
                 </p:selectOneMenu>    
                 Zip:<h:inputText value="#{memberBean.address.zip}"/>
-            </h:panelGrid>
+            </p:panelGrid>
             <h:commandButton value="Save" action="#{memberBean.save}"/>
         </h:form>
     </ui:define>
