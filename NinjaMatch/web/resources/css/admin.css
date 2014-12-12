@@ -1,17 +1,43 @@
-#header{
-    height: 100px;
-    display: block;
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 15, 2014, 5:16:42 PM
+    Author     : yyun
+*/
+
+.ui-widget,.ui-widget-header,.ui-widget-content,.ui-widget-header .ui-widget-header,.ui-widget-content .ui-widget-content,.ui-widget input,.ui-widget select,.ui-widget textarea,.ui-widget button
+    {
+    font-size: 93% !important;
 }
-#page{
-    
+.ui-layout-north {
+    z-index:40 !important;
+    overflow:visible !important;
 }
-#west{
-    display: inline-block;
-    width: 200px;
-    background: #204d74;
+.ui-layout-north .ui-layout-unit-content {
+    overflow:visible !important;
 }
-#content{
-    display: inline-block;
-    background: #245580;
-    width: auto;
+.ui-menubar .ui-menuitem-text {
+    font-size: 13px!important; top: -1px;
+}
+.product_gallary .ui-panelgrid td, .product_gallary .ui-panelgrid tr{
+   border-style: none !important
+}
+.page-header .ui-layout-unit{
+    border: none;
+}
+.page-header .ui-widget-content{
+    background-color: #fff;
+}
+.ui-tree-node-label {
+    font-size: 0.8em;
+}
+
+#west .ui-widget-content{
+    background-color: #fff;
+}
+#west .ui-layout-unit{
+    background-color: #fff;
 }
