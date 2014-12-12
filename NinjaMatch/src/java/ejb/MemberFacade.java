@@ -38,4 +38,14 @@ public class MemberFacade extends AbstractFacade<MemberAccount> {
         List<MemberAccount> res = query.getResultList();
         return res;
     }
+    public boolean isUserNameExist(String username) {
+        String jpql = "SELECT m FROM MemberAccount m WHERE m.userName = :username";
+        Query query = em.createQuery(jpql);
+        query.setParameter("username",username);
+        List<MemberAccount> res = query.getResultList();
+        if(res.isEmpty())
+            return false;
+        else
+            return true;
+    }
 }
