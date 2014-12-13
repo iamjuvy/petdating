@@ -9,9 +9,11 @@ import ejb.AdminAccountFacade;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import model.AdminAccount;
@@ -28,7 +30,7 @@ import org.primefaces.model.chart.PieChartModel;
  * @author yyun
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class AdminController {
     @Inject 
     private AdminAccountFacade adminFacade;
@@ -36,6 +38,8 @@ public class AdminController {
     private PieChartModel chartAgesModel;
     private PieChartModel chartGendersModel;
     
+    @Inject
+    private AccountManager accountManager;
     
     @PostConstruct
     public void init(){
@@ -53,26 +57,29 @@ public class AdminController {
     }
     public String edit(){
         FacesContext ctx = FacesContext.getCurrentInstance();
-        boolean found_error = false;
-        if (admin.getFirstName()==null || "".equals(admin.getFirstName())){
-            ctx.addMessage("mainForm:bookForm:first_name", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid first name", "First name is required"));
-            found_error = true;
+        try{
+            boolean found_error = false;
+            if (admin.getFirstName()==null || "".equals(admin.getFirstName())){
+                ctx.addMessage("mainForm:bookForm:first_name", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid first name", "First name is required"));
+                found_error = true;
+            }
+            if (admin.getLastname()==null || "".equals(admin.getLastname())){
+                ctx.addMessage("mainForm:bookForm:last_name", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid last name", "Last name is required"));
+                found_error = true;
+            }
+            if (admin.getPassword()==null || "".equals(admin.getPassword())){
+                ctx.addMessage("mainForm:bookForm:password", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid password", "Password is required"));
+                found_error = true;
+            }
+            if (found_error == false){
+                adminFacade.edit(admin);
+                return "manage_admin";
+            }
+            return null;
+        }catch(Exception ex){
+            ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ex.getMessage()));
+            return null;
         }
-        if (admin.getLastname()==null || "".equals(admin.getLastname())){
-            ctx.addMessage("mainForm:bookForm:last_name", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid last name", "Last name is required"));
-            found_error = true;
-        }
-        
-        if (admin.getPassword()==null || "".equals(admin.getPassword())){
-            ctx.addMessage("mainForm:bookForm:password", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid password", "Password is required"));
-            found_error = true;
-        }
-        if (found_error == false){
-            adminFacade.edit(admin);
-            return "manage_admin";
-        }
-        
-        return null;
     }
 
     /**
@@ -81,17 +88,9 @@ public class AdminController {
     public AdminAccount getAdmin() {
         return admin;
     }
-
-    /**
-     * @param admin the admin to set
-     */
     public void setAdmin(AdminAccount admin) {
         this.admin = admin;
     }
-    
-    
-    
-    
     public PieChartModel getChartAgesModel() {
         return chartAgesModel;
     }
