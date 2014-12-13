@@ -7,9 +7,12 @@ package controller;
 
 import ejb.AdminAccountFacade;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import model.AdminAccount;
 import org.primefaces.model.chart.Axis;
@@ -33,14 +36,43 @@ public class AdminController {
     private PieChartModel chartAgesModel;
     private PieChartModel chartGendersModel;
     
+    
     @PostConstruct
     public void init(){
         admin = new AdminAccount();
         createAnimatedModels();
     }
     
-    public void save(){
+    public String prepareEdit(AdminAccount u){
+        admin = u;
+        return "edit_admin";
+    }
+    public String remove(AdminAccount u){
+        adminFacade.remove(u);
+        return "manage_admin";
+    }
+    public String edit(){
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        boolean found_error = false;
+        if (admin.getFirstName()==null || "".equals(admin.getFirstName())){
+            ctx.addMessage("mainForm:bookForm:first_name", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid first name", "First name is required"));
+            found_error = true;
+        }
+        if (admin.getLastname()==null || "".equals(admin.getLastname())){
+            ctx.addMessage("mainForm:bookForm:last_name", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid last name", "Last name is required"));
+            found_error = true;
+        }
         
+        if (admin.getPassword()==null || "".equals(admin.getPassword())){
+            ctx.addMessage("mainForm:bookForm:password", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid password", "Password is required"));
+            found_error = true;
+        }
+        if (found_error == false){
+            adminFacade.edit(admin);
+            return "manage_admin";
+        }
+        
+        return null;
     }
 
     /**

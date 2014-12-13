@@ -41,3 +41,16 @@ and open the template in the editor.
 #west .ui-layout-unit{
     background-color: #fff;
 }
+.nimg-profile{
+    background-image: url("#{resource['images/profile.png']}");
+    width: 64px;
+    height: 64px;
+}
+.nimg-security{
+    background-image: url("#{resource['images/security.png']}");
+    width: 64px;
+    height: 64px;
+}
+.huge{
+    font-size: 40px;
+}

@@ -10,7 +10,7 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:form id="form">
+        <h:form rendered="#{param['action'] eq null}">
             <h3>Administrators List</h3>
 
             <h:dataTable var="u" class="table table-hove" value="#{adminController.allAdmins}" >
@@ -32,8 +32,8 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Actions</f:facet>
-                    <h:commandButton class="btn btn-sm" value="Edit" action="#{manageCourseView.updateCourseView(course)}"/> |
-                    <h:commandButton class="btn btn-sm btn-danger" value="Delete" action="#{manageCourseView.deleteCourse(course)}"/>                      
+                    <h:commandButton class="btn btn-sm" value="Edit" action="#{adminController.prepareEdit(u)}"/> |
+                    <h:commandButton class="btn btn-sm btn-danger" value="Delete" action="#{adminController.remove(u)}"/>                      
                 </h:column>               
             </h:dataTable>
         </h:form>
