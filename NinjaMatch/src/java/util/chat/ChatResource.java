@@ -9,6 +9,7 @@ package util.chat;
  *
  * @author FAlegre
  */
+import java.io.Serializable;
 import org.primefaces.push.EventBus;
 import org.primefaces.push.RemoteEndpoint;
 import org.primefaces.push.annotation.OnClose;
@@ -25,7 +26,7 @@ import javax.servlet.ServletContext;
 
 @PushEndpoint("/{room}/{user}")
 @Singleton
-public class ChatResource {
+public class ChatResource implements Serializable {
 
     private final Logger logger = LoggerFactory.getLogger(ChatResource.class);
 
@@ -40,9 +41,12 @@ public class ChatResource {
 
     @OnOpen
     public void onOpen(RemoteEndpoint r, EventBus eventBus) {
+        System.out.println("=============" + r.toString());
+        System.out.println("=============" + eventBus.toString());
         logger.info("OnOpen {}", r);
 
-        eventBus.publish(room + "/*", new Message(String.format("%s has entered the room '%s'", username, room), true));
+            eventBus.publish(room + "/*", new Message(String.format("%s has entered the room '%s'", username, room), true));
+
     }
 
     @OnClose

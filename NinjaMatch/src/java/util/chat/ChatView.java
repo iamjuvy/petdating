@@ -114,12 +114,6 @@ public class ChatView implements Serializable {
     public void login() {
         MemberAccount member = (MemberAccount) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         username = member.getUserName();
-        System.out.println("=============================" + username);
-        inRoom();
-    }
-
-    @Asynchronous
-    private void inRoom() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
 
         if (users.contains(username)) {
@@ -144,5 +138,12 @@ public class ChatView implements Serializable {
         //reset state
         loggedIn = false;
         username = null;
+
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_home.xhtml");
+        } catch (IOException ex) {
+
+        }
     }
 }

@@ -1,29 +1,17 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-        <script type="text/javascript">
-            function handleMessage(message) {
-                var chatContent = $(PrimeFaces.escapeClientId('form:public')),
-                        text = (message.user) ? message.user + ':' + message.text : message.text;
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/template/customer_template.xhtml">
 
-                chatContent.append(text + '<br />');
+    <ui:define name="metadata">
 
-                //keep scroll
-                chatContent.scrollTop(chatContent.height());
+    </ui:define>
 
-                if (message.updateList) {
-                    updateList();
-                }
-            }
-        </script>
-    </h:head>
-    <h:body>
-        <p:growl id="growl" showDetail="true" />
+    <ui:define name="content">
+     <p:growl id="growl" showDetail="true" />
 
         <h:form id="form">
             <p:remoteCommand name="updateList" update="users" process="@this" />
@@ -52,16 +40,10 @@
                     <p:spacer width="5" />
                     <p:commandButton value="Send" actionListener="#{chatView.sendGlobal}" oncomplete="$('.messageInput').val('').focus()" />
                     <p:spacer width="5" />
-                    <p:commandButton value="Disconnect" actionListener="#{chatView.disconnect}" global="false" update="container" />
+                    <p:commandButton value="Disconnect" actionListener="#{chatView.disconnect}" global="false" update="container"  />
                 </h:panelGroup>
 
-                <h:panelGroup rendered="#{not chatView.loggedIn}" >
-                    Username: <p:inputText value="#{chatView.username}" />
 
-                    <p:spacer width="5" />
-                    <p:commandButton value="Login" actionListener="#{chatView.login}" update="container"
-                                     icon="ui-icon-person" />
-                </h:panelGroup>
 
             </p:fieldset>
 
@@ -77,8 +59,6 @@
         </h:form>
 
         <p:socket onMessage="handleMessage" channel="/{room}" autoConnect="false" widgetVar='subscriber' />
+    </ui:define>
 
-
-    </h:body>
-</html>
-
+</ui:composition>
