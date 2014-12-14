@@ -6,6 +6,7 @@
 package controller;
 
 import ejb.AdminAccountFacade;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -24,6 +25,10 @@ import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
+import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 
 /**
  *
@@ -32,11 +37,13 @@ import org.primefaces.model.chart.PieChartModel;
 @ManagedBean
 @SessionScoped
 public class AdminController {
-    @Inject 
-    private AdminAccountFacade adminFacade;
     private AdminAccount admin;
     private PieChartModel chartAgesModel;
     private PieChartModel chartGendersModel;
+    
+    private WebTarget rest_web_target;
+    private Client rest_client;
+    private static final String BASE_URI = "http://localhost:8080/NinjaMatch/restful";
     
     @Inject
     private AccountManager accountManager;
@@ -44,6 +51,8 @@ public class AdminController {
     @PostConstruct
     public void init(){
         admin = new AdminAccount();
+        rest_client = javax.ws.rs.client.ClientBuilder.newClient();
+        rest_web_target = rest_client.target(BASE_URI).path("admin");
         createAnimatedModels();
     }
     
@@ -51,11 +60,11 @@ public class AdminController {
         admin = u;
         return "edit_admin";
     }
-    public String remove(AdminAccount u){
-        adminFacade.remove(u);
+    public String remove(AdminAccount u)  throws ClientErrorException{
+        rest_web_target.path(java.text.MessageFormat.format("{0}", new Object[]{u.getId().toString()})).request().delete();
         return "manage_admin";
     }
-    public String edit(){
+    public String edit() throws ClientErrorException{
         FacesContext ctx = FacesContext.getCurrentInstance();
         try{
             boolean found_error = false;
@@ -72,7 +81,7 @@ public class AdminController {
                 found_error = true;
             }
             if (found_error == false){
-                adminFacade.edit(admin);
+                rest_web_target.path(java.text.MessageFormat.format("{0}", new Object[]{admin.getId()})).request(javax.ws.rs.core.MediaType.APPLICATION_XML).put(javax.ws.rs.client.Entity.entity(admin, javax.ws.rs.core.MediaType.APPLICATION_XML));
                 return "manage_admin";
             }
             return null;
@@ -119,7 +128,9 @@ public class AdminController {
         chartGendersModel.setDiameter(150);
     }
     
-    public List<AdminAccount> getAllAdmins(){
-        return adminFacade.findAll();
+    public List<AdminAccount> getAllAdmins()  throws ClientErrorException{
+        GenericType<List<AdminAccount>> gType = new GenericType<List<AdminAccount>>(){}; 
+        WebTarget resource = rest_web_target;
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(gType);
     }
 }
