@@ -10,24 +10,25 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import model.MemberAccount;
+import util.chat.ChatView;
 
 /**
  *
  * @author atan
  */
 @ManagedBean(name = "signOnBean")
-@SessionScoped
+@Stateless
 public class SignOnController implements Serializable {
 
     @EJB
     private UserFacade ejbUserFacade;
-    @EJB
-    private TempCache t;
 
     private MemberAccount member;
 
@@ -72,12 +73,13 @@ public class SignOnController implements Serializable {
         List<MemberAccount> queryList = ejbUserFacade.validateUser(getUserName(), getPassword());
         if (!(queryList.isEmpty())) {
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
             try {
+                ec.getSessionMap().put("user", queryList.get(0));
                 ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_home.xhtml");
             } catch (IOException ex) {
 
             }
-            t.setMember(queryList.get(0));
         }
     }
 
@@ -88,6 +90,27 @@ public class SignOnController implements Serializable {
         } catch (IOException ex) {
 
         }
+    }
+
+    public void logout() {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath() + "/faces/login.xhtml");
+            ec.invalidateSession();
+        } catch (IOException ex) {
+
+        }
+    }
+
+    public void logtochat() {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
+        try {
+            ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_chat.xhtml");
+        } catch (IOException ex) {
+
+        }
+
     }
 
 }

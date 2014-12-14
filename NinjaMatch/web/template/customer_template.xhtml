@@ -44,11 +44,11 @@
                             </p:submenu>
                             <p:submenu label="Match">
                                 <p:menuitem value="Matches" outcome="/pages/customer/customer_search" icon="ui-icon-heart"/>
-                                <p:menuitem value="Chatroom" outcome="/pages/customer/customer_chat" icon="ui-icon-heart"/>
+                                <p:menuitem value="Chatroom" action="#{signOnBean.logtochat}" icon="ui-icon-heart"/>
                             </p:submenu>
                             <p:submenu label="Mails">
-                                <p:menuitem value="External"  />
-                                <p:menuitem value="Internal" icon="ui-icon-star"/>
+                                <p:menuitem value="External" icon="ui-icon-star" />
+                                <p:menuitem value="Logout" action="#{signOnBean.logout}" />
                             </p:submenu>
                         </p:menu>
                     </h:form>

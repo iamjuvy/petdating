@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import ejb.MemberFacade;
@@ -12,6 +7,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import model.MemberAccount;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.StreamedContent;
@@ -35,8 +32,7 @@ public class SearchController implements Serializable {
     private MemberFacade ejbMemberFacade;
     @EJB
     private ImageUtil imageUtil;
-    @EJB
-    private TempCache t;
+
     @EJB
     private GoogleGeocode geocoder;
 
@@ -51,7 +47,8 @@ public class SearchController implements Serializable {
 
     @PostConstruct
     void init() {
-        member = t.getMember();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        member = (MemberAccount) ec.getSessionMap().get("user");
         zoom = 4;
         coords = "37.6,-95.665";
 
@@ -77,9 +74,7 @@ public class SearchController implements Serializable {
                 simpleModel.addOverlay(new Marker(latlng, detail, mem, "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"));
             }
         }
-
         zoom = 8;
-
     }
 
     public StreamedContent getSearchMemberImg() {

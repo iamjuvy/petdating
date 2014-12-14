@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -30,20 +31,19 @@ import util.GoogleGeocode;
  * @author FrancisAerol
  */
 @ManagedBean(name = "memberBean")
-@SessionScoped
+@Stateless
 public class MemberController implements Serializable {
 
     @EJB
     private MemberFacade ejbMemberFacade;
     @EJB
     private UserFacade ejbUserFacade;
-    @EJB
-    private TempCache t;
+
     @EJB
     private DateUtil dateUtil;
     @EJB
     private GoogleGeocode geocoder;
-    
+
     private MemberAccount member;
     private ArrayList<String> states;
 
@@ -171,14 +171,15 @@ public class MemberController implements Serializable {
         List<MemberAccount> queryList = ejbUserFacade.validateUser(getMember().getUserName(), getMember().getPassword());
         if (!(queryList.isEmpty())) {
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.getSessionMap().put("user", queryList.get(0));
             try {
                 ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_home.xhtml");
             } catch (IOException ex) {
-//                Logger.getLogger(this.class.getName()).log(Level.SEVERE, null, ex);
+
             }
-            t.setMember(queryList.get(0));
         }
     }
+
     public void update() {
         member = new MemberAccount(getMember().getUserName(),
                 getMember().getPassword(),
@@ -197,24 +198,16 @@ public class MemberController implements Serializable {
         getMember().setAddress(address);
         ejbMemberFacade.edit(member);
         System.out.println("Save Successfully!");
+    }
 
-        List<MemberAccount> queryList = ejbUserFacade.validateUser(getMember().getUserName(), getMember().getPassword());
-        if (!(queryList.isEmpty())) {
-            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-            try {
-                ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_edit.xhtml");
-            } catch (IOException ex) {
-//                Logger.getLogger(this.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            t.setMember(queryList.get(0));
+    public void validateUserId(FacesContext f, UIComponent c, Object obj) {
+        String s = (String) obj;
+        System.out.println("Value of S" + s);
+        if (s.length() == 0) {
+            throw new ValidatorException(new FacesMessage("UserID cannot be empty."));
+        }
+        if (ejbMemberFacade.isUserNameExist(s)) {
+            throw new ValidatorException(new FacesMessage("UserID is already used."));
         }
     }
-    public void validateUserId(FacesContext f, UIComponent c, Object obj){
-        String s=(String)obj;
-        System.out.println("Value of S"+s);
-        if(s.length()==0)
-            throw new ValidatorException(new FacesMessage("UserID cannot be empty."));  
-        if (ejbMemberFacade.isUserNameExist(s))
-            throw new ValidatorException(new FacesMessage("UserID is already used."));
-    }  
 }

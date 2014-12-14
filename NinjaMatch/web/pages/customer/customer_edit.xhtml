@@ -17,28 +17,7 @@
             <p:fileUpload value="#{imageBean.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  mode="simple"/>
             <br />
             <p:commandButton id="btnBool" value="Upload" ajax="false" actionListener="#{imageBean.upload}"/>
-            <h:panelGrid columns="2">
-                User Name:<h:inputText value="#{memberBean.member.userName}" required="true" />
-                Password:<p:password id="pwd1" value="#{memberBean.member.password}" match="pwd2" label="Password 1" required="true" validatorMessage="does not match" />
-                Confirm Password:<p:password id="pwd2" value="#{memberBean.member.password}" label="Password 2" required="true" validatorMessage="does not match" />
-                First Name:<h:outputText value="#{memberBean.member.firstName}"/>
-                Last Name:<h:outputText value="#{memberBean.member.lastname}"/>
-                Gender:
-                <h:selectOneRadio value="#{memberBean.member.gender}">
-                    <f:selectItem itemValue="Male" itemLabel="Male" />
-                    <f:selectItem itemValue="Female" itemLabel="Female" />
-                </h:selectOneRadio>
-                Email Address:<h:inputText id="email" value="#{memberBean.member.email}" required="true" label="Email" validatorMessage="#{memberBean.member.email} is not valid">
-                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-                </h:inputText>
-                Street:<h:inputText value="#{memberBean.address.street}"/>
-                City:<h:inputText value="#{memberBean.address.city}" required="true"/>
-                State: <p:selectOneMenu id="state" value="#{memberBean.address.state}"   style="width:150px">
-                        <f:selectItem itemLabel="Select State" itemValue=""/>
-                        <f:selectItems value="#{memberBean.states}" />
-                    </p:selectOneMenu>    
-                Zip:<h:inputText value="#{memberBean.address.zip}"/>
-            </h:panelGrid>
+ 
             <h:commandButton value="Update" action="#{memberBean.update}"/>
         </h:form>
     </ui:define>

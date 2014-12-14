@@ -15,7 +15,9 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import model.MemberAccount;
 import model.Photo;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -36,8 +38,6 @@ public class ImageFileController implements Serializable {
     private ImageUtil imageUtil;
     @EJB
     private DateUtil dateUtil;
-    @EJB
-    private TempCache t;
 
     private StreamedContent streamedContent;
     private StreamedContent currentPicture;
@@ -81,7 +81,8 @@ public class ImageFileController implements Serializable {
             }
             streamedContent = imageUtil.getStreamed(bytes);
             photo.setImage(bytes);
-            photo.setMember(t.getMember());
+            MemberAccount member = (MemberAccount) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+            photo.setMember(member);
             photo.setUploadDate(dateUtil.getCurrentDate());
             ejbPhotoFacade.create(photo);
         }
@@ -93,7 +94,9 @@ public class ImageFileController implements Serializable {
     }
 
     public StreamedContent getCurrentPicture() {
-        Photo p = ejbPhotoFacade.getCurrentImage(t.getMember());
+        MemberAccount member = (MemberAccount) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+
+        Photo p = ejbPhotoFacade.getCurrentImage(member);
         if (p != null) {
             currentPicture = imageUtil.getStreamed(p.getImage());
         } else {
