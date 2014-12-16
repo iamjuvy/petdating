@@ -44,4 +44,15 @@ public class AdminAccountFacade extends AbstractFacade<AdminAccount> {
             return null;
         }
     }
+    public AdminAccount findByUsernamePassword(String username, String password){
+        try{
+            String jpql = "SELECT c FROM UserAccount c WHERE c.userName = :username AND c.password = :password";
+            Query query = getEntityManager().createQuery(jpql, UserAccount.class);
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            return (AdminAccount)query.getSingleResult();
+        }catch(Exception e){
+            return null;
+        }
+    }
 }

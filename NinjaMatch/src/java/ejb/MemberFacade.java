@@ -10,7 +10,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import model.AdminAccount;
 import model.MemberAccount;
+import model.UserAccount;
 
 /**
  *
@@ -47,5 +49,16 @@ public class MemberFacade extends AbstractFacade<MemberAccount> {
             return false;
         else
             return true;
+    }
+    public MemberAccount findByUsernamePassword(String username, String password){
+        try{
+            String jpql = "SELECT c FROM UserAccount c WHERE c.userName = :username AND c.password = :password";
+            Query query = getEntityManager().createQuery(jpql, UserAccount.class);
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            return (MemberAccount)query.getSingleResult();
+        }catch(Exception e){
+            return null;
+        }
     }
 }

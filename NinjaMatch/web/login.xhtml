@@ -1,27 +1,67 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Ninja Dating</title>
-        <h:outputStylesheet name="css/style-login.css" />
+        <h:outputStylesheet name="css/bootstrap.css" />
+        <h:outputStylesheet name="css/bootstrap-theme.css" />
+        <h:outputStylesheet name="css/signin.css" />
     </h:head>
     <h:body>
-        <p:panel id="login" styleClass="centered">
-            <h:form>
-                <p:outputLabel for="username" value="Username: "/>
-                <p:inputText id="username" value="#{signOnBean.userName}"/>
-                <br />
-                <p:outputLabel for="password" value="Password: " />
-                <p:password id="password" value="#{signOnBean.password}"/>
-                <br/>
-                <br />
-                <p:commandButton value="Log-in" action="#{signOnBean.verifyPassword}" />
-                <br/>
-                <p:commandLink value="Register" action="#{signOnBean.register}" />
-            </h:form>
-        </p:panel> 
+        <div class="s_homeh">
+            <div class="s_header">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="width:150px;">
+                                <h:graphicImage name="images/logo.png"  />
+                            </div>
+                        </td>
+                        <td valign="top">
+                            <div style="font-size: 24px; font-weight: bold; color: #fff; padding-top:10px;">
+                                Ninja Match
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="s_homeb">
+            <table>
+                <tr>
+                    <td>
+                        <div class="s_background">
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="s_login">
+                            <h:form>
+                                <div class="input-group" style="padding-bottom: 10px;">
+                                    <h:inputText id="username" value="#{loginController.userName}" class="form-control" pt:placeholder="Username" />
+                                    <span class="input-group-addon">@</span>
+                                </div>
+                                <div style="padding-bottom: 10px;">
+                                    <h:inputSecret id="password" value="#{loginController.password}" class="form-control" pt:placeholder="Password" />
+                                </div>
+                                <div style="padding-bottom: 10px;">
+                                    <h:commandButton value="Sign In" id="signon" action="#{loginController.login}" class="btn form-control btn-primary "/>
+                                </div>
+                                <p:commandLink value="Sign Up" action="#{loginController.register}" />
+                                <div style="padding-top: 20px;">
+                                    <h:graphicImage name="images/followus.png"  />
+                                </div>
+                            </h:form>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </h:body>
 </html>
 

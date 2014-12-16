@@ -1019,6 +1019,8 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.jackson-core-asl-1.8.5.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.jackson-mapper-asl-1.8.5.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.javaee-endorsed-api-7.0.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.atmosphere-runtime-native-2.0.0.rc3.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.atmosphere-runtime-2.1.9.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>

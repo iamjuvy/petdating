@@ -1,0 +1,87 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 15, 2014, 5:16:42 PM
+    Author     : yyun
+*/
+
+.ui-widget,.ui-widget-header,.ui-widget-content,.ui-widget-header .ui-widget-header,.ui-widget-content .ui-widget-content,.ui-widget input,.ui-widget select,.ui-widget textarea,.ui-widget button
+    {
+    font-size: 93% !important;
+}
+.ui-layout-north {
+    z-index:40 !important;
+    overflow:visible !important;
+}
+.ui-layout-north .ui-layout-unit-content {
+    overflow:visible !important;
+}
+.ui-menubar .ui-menuitem-text {
+    font-size: 13px!important; top: -1px;
+}
+.product_gallary .ui-panelgrid td, .product_gallary .ui-panelgrid tr{
+   border-style: none !important
+}
+.page-header .ui-layout-unit{
+    border: none;
+}
+.page-header .ui-widget-content{
+    background-color: #fff;
+}
+.ui-tree-node-label {
+    font-size: 0.8em;
+}
+
+#west .ui-widget-content{
+    background-color: #fff;
+}
+#west .ui-layout-unit{
+    background-color: #fff;
+}
+.nimg-profile{
+    background-image: url("#{resource['images/profile.png']}");
+    width: 64px;
+    height: 64px;
+}
+.nimg-security{
+    background-image: url("#{resource['images/security.png']}");
+    width: 64px;
+    height: 64px;
+}
+.huge{
+    font-size: 40px;
+}
+
+.s_homeh{
+    background-color: #245269;
+    display: block;
+    height: 55px;
+    width: 100%;
+}
+.s_homeb{
+    background-color: #fff;
+    display: block;
+    width: 800px;
+    margin: auto;
+}
+.s_header{
+    display: block;
+    width: 800px;
+    margin: auto;
+}
+.s_background{
+    width: 555px;
+    height: 570px;
+    display: inline-block;
+    background-image: url("#{resource['images/home.png']}");
+}
+.s_login{
+    width: 235px;
+    height: 570px;
+    display: inline-block;
+    padding: 10px;  
+    margin-top: 40px;
+}
