@@ -19,12 +19,16 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
  * @author kulkin1
  */
 @Entity
+@XmlRootElement
 public class MemberAccount extends UserAccount implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,6 +75,8 @@ public class MemberAccount extends UserAccount implements Serializable {
     /**
      * @return the photos
      */
+    @XmlTransient
+    @JsonIgnore
     public List<Photo> getPhotos() {
         return photos;
     }
@@ -85,6 +91,8 @@ public class MemberAccount extends UserAccount implements Serializable {
     /**
      * @return the preferences
      */
+    @XmlTransient
+    @JsonIgnore
     public List<Preference> getPreferences() {
         return preferences;
     }
@@ -99,6 +107,8 @@ public class MemberAccount extends UserAccount implements Serializable {
     /**
      * @return the profileviews
      */
+    @XmlTransient
+    @JsonIgnore
     public List<ProfileView> getProfileviews() {
         return profileviews;
     }
@@ -113,6 +123,8 @@ public class MemberAccount extends UserAccount implements Serializable {
     /**
      * @return the messages
      */
+    @XmlTransient
+    @JsonIgnore
     public List<Message> getMessages() {
         return messages;
     }

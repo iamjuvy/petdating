@@ -11,6 +11,13 @@
     
     <ui:define name="content">
         <h:form id="form">
+            <table style="width:100%">
+                <tr>
+                    <td style="text-align: center;"><h1>Statistic</h1></td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
             <h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
                 <p:chart type="pie" model="#{adminController.chartAgesModel}" style="width:400px;" />
                 <p:chart type="pie" model="#{adminController.chartGendersModel}" style="width:400px;" />

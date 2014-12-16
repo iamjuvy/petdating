@@ -12,7 +12,7 @@
     <ui:define name="content">
         <h:form id="bookForm" >
             <div style='padding-bottom: 20px'>
-                <h3>Edit Profile</h3>
+                <h3>Edit Administrator Profile</h3>
             </div>
             <h:inputHidden id="id" value="#{adminController.admin.id}" />
             
@@ -79,7 +79,7 @@
                         </div>
                         <div class="form-group">
                             <h:outputLabel for="password">Password</h:outputLabel>
-                            <h:inputSecret id="password" class="form-control" value="#{adminController.admin.password}" redisplay="true"  />
+                            <h:inputSecret id="password" class="form-control" value="#{adminController.admin.password}"  />
                             <h:message for="password" errorStyle="color:red"/> 
                         </div>
                         <div class="clearfix"></div>

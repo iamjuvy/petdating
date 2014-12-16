@@ -50,9 +50,19 @@ public class MemberFacade extends AbstractFacade<MemberAccount> {
         else
             return true;
     }
+    public MemberAccount findByUsername(String username){
+        try{
+            String jpql = "SELECT c FROM MemberAccount c WHERE c.userName = :username";
+            Query query = getEntityManager().createQuery(jpql, UserAccount.class);
+            query.setParameter("username", username);
+            return (MemberAccount)query.getSingleResult();
+        }catch(Exception e){
+            return null;
+        }
+    }
     public MemberAccount findByUsernamePassword(String username, String password){
         try{
-            String jpql = "SELECT c FROM UserAccount c WHERE c.userName = :username AND c.password = :password";
+            String jpql = "SELECT c FROM MemberAccount c WHERE  c.userName = :username AND c.password = :password";
             Query query = getEntityManager().createQuery(jpql, UserAccount.class);
             query.setParameter("username", username);
             query.setParameter("password", password);

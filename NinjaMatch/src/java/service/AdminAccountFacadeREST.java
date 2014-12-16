@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,6 +20,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import model.AdminAccount;
+import model.UserAccount;
 
 /**
  *
@@ -59,6 +61,16 @@ public class AdminAccountFacadeREST extends AbstractFacade<AdminAccount> {
     @Produces({"application/xml", "application/json"})
     public AdminAccount find(@PathParam("id") Long id) {
         return super.find(id);
+    }
+    
+    @GET
+    @Path("username/{userName}")
+    @Produces({"application/xml", "application/json"})
+    public AdminAccount findByUsername(@PathParam("userName") String userName) {
+        String jpql = "SELECT c FROM UserAccount c WHERE c.userName LIKE :username";
+        Query query = getEntityManager().createQuery(jpql, UserAccount.class);
+        query.setParameter("username", userName);
+        return (AdminAccount)query.getSingleResult();
     }
 
     @GET

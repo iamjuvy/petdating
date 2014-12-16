@@ -8,6 +8,7 @@ package controller;
 import ejb.AdminAccountFacade;
 import ejb.MemberFacade;
 import java.io.IOException;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
@@ -23,7 +24,7 @@ import model.MemberAccount;
  */
 @ManagedBean
 @SessionScoped
-public class LoginController {
+public class LoginController implements Serializable{
     private String userName;
     private String password;
     private AdminAccount admin;
@@ -83,5 +84,13 @@ public class LoginController {
             if (member==null) return;
             ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_home.xhtml");
         }
+    }
+    public void logout() throws IOException{
+        admin = null;
+        member = null;
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.invalidateSession();
+        ec.redirect(ec.getRequestContextPath() + "/faces/" + "login.xhtml");
+        
     }
 }

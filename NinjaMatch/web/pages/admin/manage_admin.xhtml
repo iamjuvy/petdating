@@ -11,7 +11,18 @@
 
     <ui:define name="content">
         <h:form rendered="#{param['action'] eq null}">
-            <h3>Administrators List</h3>
+            <table>
+                <tr>
+                    <td><h3>Administrators List</h3></td>
+                    <td>
+                        <div style="padding-left: 20px; padding-top:10px;">
+                            <h:commandButton value="Create" class="btn btn-success" action="#{adminController.prepareInsert}"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+
 
             <h:dataTable var="u" class="table table-hove" value="#{adminController.allAdmins}" >
                 <h:column>

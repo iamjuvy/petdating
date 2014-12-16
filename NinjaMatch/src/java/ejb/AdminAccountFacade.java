@@ -33,10 +33,9 @@ public class AdminAccountFacade extends AbstractFacade<AdminAccount> {
         super(AdminAccount.class);
     }
     
-    @Interceptors(AdminLogger.class)
     public AdminAccount findByUsername(String username){
         try{
-            String jpql = "SELECT c FROM UserAccount c WHERE c.userName LIKE :username";
+            String jpql = "SELECT c FROM AdminAccount c WHERE c.userName = :username";
             Query query = getEntityManager().createQuery(jpql, UserAccount.class);
             query.setParameter("username", username);
             return (AdminAccount)query.getSingleResult();
@@ -46,7 +45,7 @@ public class AdminAccountFacade extends AbstractFacade<AdminAccount> {
     }
     public AdminAccount findByUsernamePassword(String username, String password){
         try{
-            String jpql = "SELECT c FROM UserAccount c WHERE c.userName = :username AND c.password = :password";
+            String jpql = "SELECT c FROM AdminAccount c WHERE  c.userName = :username AND c.password = :password";
             Query query = getEntityManager().createQuery(jpql, UserAccount.class);
             query.setParameter("username", username);
             query.setParameter("password", password);
