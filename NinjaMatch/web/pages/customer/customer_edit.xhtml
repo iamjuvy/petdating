@@ -13,10 +13,6 @@
     <ui:define name="content">
         <p:growl id="messages" showDetail="true" />
         <h:form enctype="multipart/form-data">
-            <br />
-            <p:fileUpload value="#{imageBean.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  mode="simple"/>
-            <br />
-            <p:commandButton id="btnBool" value="Upload" ajax="false" actionListener="#{imageBean.upload}"/>
             <h:panelGrid columns="2">
                 User Name:<h:inputText value="#{memberBean.member.userName}" required="true" />
                 Password:<p:password id="pwd1" value="#{memberBean.member.password}" match="pwd2" label="Password 1" required="true" validatorMessage="does not match" />

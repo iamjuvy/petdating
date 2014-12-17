@@ -13,11 +13,10 @@
 
         <h:form>
             <p:message for="email" />
-            <p:messages id="messages" />
+            <p:messages id="messages"/>
             <p:panelGrid columns="2">
                 User Name:<p:inputText  id="userid" value="#{memberBean.member.userName}" required="true" 
-                          validator="#{memberBean.validateUserId}">
-                
+                          validator="#{memberBean.validateUserId}">                    
                 </p:inputText>   
                 Password:<p:password id="pwd1" value="#{memberBean.member.password}" match="pwd2" label="Password 1" required="true" validatorMessage="does not match" />
                 Confirm Password:<p:password id="pwd2" value="#{memberBean.member.password}" label="Password 2" required="true" validatorMessage="does not match" />
@@ -39,7 +38,18 @@
                     <f:selectItems value="#{memberBean.states}" />
                 </p:selectOneMenu>    
                 Zip:<h:inputText value="#{memberBean.address.zip}"/>
+                <p:outputLabel value="Select Preferred Ethinicities:" />
+                <h:selectManyCheckbox  value="#{memberBean.ethnicities}" converter="genericEnumConverter">
+                    
+                    <f:selectItem itemValue="ASIAN" itemLabel="Asian" />
+                    <f:selectItem itemValue="BLACK_AMERICAN" itemLabel="Black American"/>
+                    <f:selectItem itemValue="WHITE_AMERICAN" itemLabel="White American"/>
+                    <f:selectItem itemValue="AFRICAN" itemLabel="African"/>
+                    <f:selectItem itemValue="EUROPEAN" itemLabel="European"/>
+           
+                </h:selectManyCheckbox>
             </p:panelGrid>
+            
             <h:commandButton value="Save" action="#{memberBean.save}"/>
         </h:form>
     </ui:define>

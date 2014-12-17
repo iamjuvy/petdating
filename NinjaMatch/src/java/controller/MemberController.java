@@ -18,10 +18,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.behavior.AjaxBehavior;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import model.Address;
+import model.Ethnicity;
 import model.MemberAccount;
 import util.DateUtil;
 import util.GoogleGeocode;
@@ -46,11 +48,13 @@ public class MemberController implements Serializable {
 
     private MemberAccount member;
     private ArrayList<String> states;
+    private List <Ethnicity> ethnicities = new ArrayList<Ethnicity>();
 
     private Address address;
     private String month;
     private String year;
     private String day;
+  
 
     @PostConstruct
     public void init() {
@@ -141,6 +145,15 @@ public class MemberController implements Serializable {
         return day;
     }
 
+    public List<Ethnicity> getEthnicities() {
+        return ethnicities;
+    }
+
+    public void setEthnicities(List<Ethnicity> ethnicities) {
+        this.ethnicities = ethnicities;
+    }
+    
+
     public void setDay(String day) {
         this.day = day;
     }
@@ -158,14 +171,18 @@ public class MemberController implements Serializable {
                 getMember().getBirthDate(),
                 getMember().getEmail(),
                 dateUtil.getCurrentDate());
+       
 
         String geoCode = geocoder.getGeoCode(getAddress().getStreet() + " " + getAddress().getCity() + " " + getAddress().getState());
         address = new Address(getAddress().getStreet(),
                 getAddress().getCity(),
                 getAddress().getState(),
                 getAddress().getZip(), geoCode);
+       
+        getMember().setEthnicities(getEthnicities());
         getMember().setAddress(address);
         ejbMemberFacade.create(member);
+        
         System.out.println("Save Successfully!");
 
         List<MemberAccount> queryList = ejbUserFacade.validateUser(getMember().getUserName(), getMember().getPassword());
@@ -202,11 +219,18 @@ public class MemberController implements Serializable {
 
     public void validateUserId(FacesContext f, UIComponent c, Object obj) {
         String s = (String) obj;
-        System.out.println("Value of S" + s);
         if (s.length() == 0) {
             throw new ValidatorException(new FacesMessage("UserID cannot be empty."));
         }
         if (ejbMemberFacade.isUserNameExist(s)) {
+            throw new ValidatorException(new FacesMessage("UserID is already used."));
+        }
+    }
+    public void validateUserName(AjaxBehavior evt) {
+        if (getMember().getUserName().isEmpty()) {
+            throw new ValidatorException(new FacesMessage("UserID cannot be empty."));
+        }
+        if (ejbMemberFacade.isUserNameExist(getMember().getUserName())) {
             throw new ValidatorException(new FacesMessage("UserID is already used."));
         }
     }

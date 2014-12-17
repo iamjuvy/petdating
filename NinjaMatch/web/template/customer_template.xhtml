@@ -40,16 +40,16 @@
                     <h:form>  
                         <p:menu>
                             <p:submenu label="Home">
+                                <p:menuitem value="Edit Picture" outcome="/pages/customer/customer_editpic" icon="ui-icon-image" />
                                 <p:menuitem value="Edit Profile" outcome="/pages/customer/customer_edit" icon="ui-icon-person"/>
                             </p:submenu>
                             <p:submenu label="Match">
                                 <p:menuitem value="Matches" outcome="/pages/customer/customer_search" icon="ui-icon-heart"/>
                                 <p:menuitem value="Chatroom" action="#{signOnBean.logtochat}" icon="ui-icon-heart"/>
                             </p:submenu>
-                            <p:submenu label="Mails">
-                                <p:menuitem value="External" icon="ui-icon-star" />
-                                <p:menuitem value="Logout" action="#{signOnBean.logout}" />
-                            </p:submenu>
+
+                            <p:menuitem value="Logout" action="#{signOnBean.logout}" />
+
                         </p:menu>
                     </h:form>
                     <ui:insert name="west" />
