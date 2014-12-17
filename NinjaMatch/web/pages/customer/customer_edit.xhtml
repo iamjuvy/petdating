@@ -13,29 +13,29 @@
     <ui:define name="content">
         <p:growl id="messages" showDetail="true" />
         <h:form enctype="multipart/form-data">
-            <h:panelGrid columns="2">
-                User Name:<h:inputText value="#{memberBean.member.userName}" required="true" />
+            <p:panelGrid columns="2">
+                User Name:<p:inputText value="#{memberBean.member.userName}" required="true" />
                 Password:<p:password id="pwd1" value="#{memberBean.member.password}" match="pwd2" label="Password 1" required="true" validatorMessage="does not match" />
                 Confirm Password:<p:password id="pwd2" value="#{memberBean.member.password}" label="Password 2" required="true" validatorMessage="does not match" />
-                First Name:<h:outputText value="#{memberBean.member.firstName}"/>
-                Last Name:<h:outputText value="#{memberBean.member.lastname}"/>
+                First Name:<p:outputLabel value="#{memberBean.member.firstName}"/>
+                Last Name:<p:outputLabel value="#{memberBean.member.lastname}"/>
                 Gender:
-                <h:selectOneRadio value="#{memberBean.member.gender}">
+                <p:selectOneRadio value="#{memberBean.member.gender}">
                     <f:selectItem itemValue="Male" itemLabel="Male" />
                     <f:selectItem itemValue="Female" itemLabel="Female" />
-                </h:selectOneRadio>
-                Email Address:<h:inputText id="email" value="#{memberBean.member.email}" required="true" label="Email" validatorMessage="#{memberBean.member.email} is not valid">
+                </p:selectOneRadio>
+                Email Address:<p:inputText id="email" value="#{memberBean.member.email}" required="true" label="Email" validatorMessage="#{memberBean.member.email} is not valid">
                     <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-                </h:inputText>
-                Street:<h:inputText value="#{memberBean.address.street}"/>
-                City:<h:inputText value="#{memberBean.address.city}" required="true"/>
+                </p:inputText>
+                Street:<p:inputText value="#{memberBean.address.street}"/>
+                City:<p:inputText value="#{memberBean.address.city}" required="true"/>
                 State: <p:selectOneMenu id="state" value="#{memberBean.address.state}"   style="width:150px">
                         <f:selectItem itemLabel="Select State" itemValue=""/>
                         <f:selectItems value="#{memberBean.states}" />
                     </p:selectOneMenu>    
-                Zip:<h:inputText value="#{memberBean.address.zip}"/>
-            </h:panelGrid>
-            <h:commandButton value="Update" action="#{memberBean.update}"/>
+                Zip:<p:inputText value="#{memberBean.address.zip}"/>
+            </p:panelGrid>
+            <p:commandButton value="Update" action="#{memberBean.update}"/>
         </h:form>
     </ui:define>
 
