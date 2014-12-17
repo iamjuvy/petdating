@@ -198,23 +198,9 @@ public class MemberController implements Serializable {
     }
 
     public void update() {
-        member = new MemberAccount(getMember().getUserName(),
-                getMember().getPassword(),
-                getMember().getFirstName(),
-                getMember().getLastname(),
-                getMember().getGender(),
-                getMember().getBirthDate(),
-                getMember().getEmail(),
-                dateUtil.getCurrentDate());
-
-        String geoCode = geocoder.getGeoCode(getAddress().getStreet() + " " + getAddress().getCity() + " " + getAddress().getState());
-        address = new Address(getAddress().getStreet(),
-                getAddress().getCity(),
-                getAddress().getState(),
-                getAddress().getZip(), geoCode);
-        getMember().setAddress(address);
+        
         ejbMemberFacade.edit(member);
-        System.out.println("Save Successfully!");
+        System.out.println("Update Successfully!");
     }
 
     public void validateUserId(FacesContext f, UIComponent c, Object obj) {
@@ -223,14 +209,6 @@ public class MemberController implements Serializable {
             throw new ValidatorException(new FacesMessage("UserID cannot be empty."));
         }
         if (ejbMemberFacade.isUserNameExist(s)) {
-            throw new ValidatorException(new FacesMessage("UserID is already used."));
-        }
-    }
-    public void validateUserName(AjaxBehavior evt) {
-        if (getMember().getUserName().isEmpty()) {
-            throw new ValidatorException(new FacesMessage("UserID cannot be empty."));
-        }
-        if (ejbMemberFacade.isUserNameExist(getMember().getUserName())) {
             throw new ValidatorException(new FacesMessage("UserID is already used."));
         }
     }
