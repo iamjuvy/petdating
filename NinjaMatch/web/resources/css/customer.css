@@ -1,0 +1,31 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 16, 2014, 11:52:46 PM
+    Author     : FrancisAerol
+*/
+
+.ui-layout-unit{
+    overflow-x:hidden !important;
+} 
+.ui-widget{
+    overflow-x:hidden !important;
+} 
+.ui-widget-content{
+    overflow-x:hidden !important;
+} 
+.ui-corner-all{
+    overflow-x:hidden !important;
+} 
+.ui-layout-north{
+    overflow-x:hidden !important;
+} 
+.ui-layout-pane{
+    overflow-x:hidden !important;
+} 
+.ui-layout-pane-north{
+    overflow-x:hidden !important;
+}

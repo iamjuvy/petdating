@@ -14,9 +14,17 @@
         <p:growl id="messages" showDetail="true" />
         <h:form enctype="multipart/form-data">
             <br />
-            <p:fileUpload value="#{imageBean.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  mode="simple"/>
-            <br />
-            <p:commandButton id="btnBool" value="Upload" ajax="false" actionListener="#{imageBean.upload}"/>
+            <p:fieldset legend="Upload From Computer">
+                <p:fileUpload value="#{imageBean.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  mode="simple"/>
+                <br />
+                <p:commandButton id="btnBool" value="Upload" ajax="false" actionListener="#{imageBean.upload}"/>
+            </p:fieldset>
+        </h:form>
+        <h:form  enctype="multipart/form-data">
+            <p:fieldset legend="Use your camera">
+                <p:photoCam widgetVar="pc" update="photo"/>
+                <p:commandButton type="button" value="Capture" onclick="PF('pc').capture()"/>
+            </p:fieldset>
         </h:form>
     </ui:define>
 

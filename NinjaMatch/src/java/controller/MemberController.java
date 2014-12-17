@@ -47,14 +47,14 @@ public class MemberController implements Serializable {
     private GoogleGeocode geocoder;
 
     private MemberAccount member;
+    private MemberAccount editMember;
     private ArrayList<String> states;
-    private List <Ethnicity> ethnicities = new ArrayList<Ethnicity>();
+    private List<Ethnicity> ethnicities = new ArrayList<Ethnicity>();
 
     private Address address;
     private String month;
     private String year;
     private String day;
-  
 
     @PostConstruct
     public void init() {
@@ -119,10 +119,16 @@ public class MemberController implements Serializable {
     }
 
     public MemberAccount getMember() {
+
         if (member == null) {
             member = new MemberAccount();
         }
         return member;
+    }
+
+    public MemberAccount getEditMember() {
+        editMember = (MemberAccount) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        return editMember;
     }
 
     public String getMonth() {
@@ -152,7 +158,6 @@ public class MemberController implements Serializable {
     public void setEthnicities(List<Ethnicity> ethnicities) {
         this.ethnicities = ethnicities;
     }
-    
 
     public void setDay(String day) {
         this.day = day;
@@ -163,6 +168,7 @@ public class MemberController implements Serializable {
     }
 
     public void save() {
+
         member = new MemberAccount(getMember().getUserName(),
                 getMember().getPassword(),
                 getMember().getFirstName(),
@@ -171,18 +177,17 @@ public class MemberController implements Serializable {
                 getMember().getBirthDate(),
                 getMember().getEmail(),
                 dateUtil.getCurrentDate());
-       
 
         String geoCode = geocoder.getGeoCode(getAddress().getStreet() + " " + getAddress().getCity() + " " + getAddress().getState());
         address = new Address(getAddress().getStreet(),
                 getAddress().getCity(),
                 getAddress().getState(),
                 getAddress().getZip(), geoCode);
-       
+
         getMember().setEthnicities(getEthnicities());
         getMember().setAddress(address);
         ejbMemberFacade.create(member);
-        
+
         System.out.println("Save Successfully!");
 
         List<MemberAccount> queryList = ejbUserFacade.validateUser(getMember().getUserName(), getMember().getPassword());
@@ -198,9 +203,24 @@ public class MemberController implements Serializable {
     }
 
     public void update() {
-        
-        ejbMemberFacade.edit(member);
-        System.out.println("Update Successfully!");
+
+        editMember = ejbMemberFacade.findByUsername(editMember.getUserName());
+
+        String geoCode = geocoder.getGeoCode(getAddress().getStreet() + " " + getAddress().getCity() + " " + getAddress().getState());
+        address = new Address(getAddress().getStreet(),
+                getAddress().getCity(),
+                getAddress().getState(),
+                getAddress().getZip(), geoCode);
+        getMember().setAddress(address);
+        ejbMemberFacade.edit(editMember);
+        System.out.println("Edit Successfully!");
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.getSessionMap().put("user", editMember);
+        try {
+            ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_home.xhtml");
+        } catch (IOException ex) {
+
+        }
     }
 
     public void validateUserId(FacesContext f, UIComponent c, Object obj) {
@@ -212,4 +232,5 @@ public class MemberController implements Serializable {
             throw new ValidatorException(new FacesMessage("UserID is already used."));
         }
     }
+
 }

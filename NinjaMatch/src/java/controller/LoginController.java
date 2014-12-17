@@ -24,7 +24,8 @@ import model.MemberAccount;
  */
 @ManagedBean
 @SessionScoped
-public class LoginController implements Serializable{
+public class LoginController implements Serializable {
+
     private String userName;
     private String password;
     private AdminAccount admin;
@@ -65,7 +66,7 @@ public class LoginController implements Serializable{
     public void setMember(MemberAccount member) {
         this.member = member;
     }
-    
+
     public void register() {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {
@@ -74,23 +75,28 @@ public class LoginController implements Serializable{
 
         }
     }
-    public void login() throws IOException{
+
+    public void login() throws IOException {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         admin = adminFacade.findByUsernamePassword(userName, password);
-        if (admin!=null) {
+        if (admin != null) {
             ec.redirect(ec.getRequestContextPath() + "/faces/pages/admin/" + "home.xhtml");
         } else {
             member = memberFacade.findByUsernamePassword(userName, password);
-            if (member==null) return;
+            if (member == null) {
+                return;
+            }
+            ec.getSessionMap().put("user", member);
             ec.redirect(ec.getRequestContextPath() + "/faces/pages/customer/customer_home.xhtml");
         }
     }
-    public void logout() throws IOException{
+
+    public void logout() throws IOException {
         admin = null;
         member = null;
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.invalidateSession();
         ec.redirect(ec.getRequestContextPath() + "/faces/" + "login.xhtml");
-        
+
     }
 }
