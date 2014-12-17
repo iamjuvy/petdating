@@ -12,25 +12,43 @@
     <ui:define name="content">
 
         <h:form>
+            <p:tabView>
             <p:message for="email" />
             <p:messages id="messages"/>
+            <p:tab title="Email snd User">
             <p:panelGrid columns="2">
+                Email Address:<p:inputText id="email" value="#{memberBean.member.email}" required="true" label="Email" validatorMessage="#{memberBean.member.email} is not valid">
+                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                </p:inputText>
                 User Name:<p:inputText  id="userid" value="#{memberBean.member.userName}" required="true" 
                           validator="#{memberBean.validateUserId}">                    
                 </p:inputText>   
                 Password:<p:password id="pwd1" value="#{memberBean.member.password}" match="pwd2" label="Password 1" required="true" validatorMessage="does not match" />
                 Confirm Password:<p:password id="pwd2" value="#{memberBean.member.password}" label="Password 2" required="true" validatorMessage="does not match" />
-                First Name:<p:inputText value="#{memberBean.member.firstName}" required="true" />
-                Last Name:<p:inputText value="#{memberBean.member.lastname}" required="true"/>
-                Gender:
+            </p:panelGrid>
+            </p:tab>
+            <p:tab title="Personal Info">
+                <p:panelGrid columns="2">
+                    First Name:<p:inputText value="#{memberBean.member.firstName}" required="true" />
+                    Last Name:<p:inputText value="#{memberBean.member.lastname}" required="true"/>
+                    Gender:
                 <p:selectOneRadio value="#{memberBean.member.gender}">
                     <f:selectItem itemValue="Male" itemLabel="Male" />
                     <f:selectItem itemValue="Female" itemLabel="Female" />
                 </p:selectOneRadio>
-                Birth Date:  <p:calendar id="bDate"  value="#{memberBean.member.birthDate}" showOn="button" /> 
-                Email Address:<p:inputText id="email" value="#{memberBean.member.email}" required="true" label="Email" validatorMessage="#{memberBean.member.email} is not valid">
-                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-                </p:inputText>
+                    Birth Date:  <p:calendar id="bDate"  value="#{memberBean.member.birthDate}" showOn="button" /> 
+                    <p:outputLabel value="Select Ethinicities:" />
+                <p:selectManyCheckbox  value="#{memberBean.ethnicities}" converter="genericEnumConverter">
+                    <f:selectItem itemValue="ASIAN" itemLabel="Asian" />
+                    <f:selectItem itemValue="BLACK_AMERICAN" itemLabel="Native American"/>
+                    <f:selectItem itemValue="WHITE_AMERICAN" itemLabel="White/Caucasian"/>
+                    <f:selectItem itemValue="AFRICAN" itemLabel="African/Descent"/>
+                    <f:selectItem itemValue="EUROPEAN" itemLabel="Latino/European"/>
+                </p:selectManyCheckbox>
+                </p:panelGrid>
+            </p:tab>
+            <p:tab title="Address">
+            <p:panelGrid columns="2">
                 Street:<p:inputText value="#{memberBean.address.street}"/>
                 City:<p:inputText value="#{memberBean.address.city}" required="true"/>
                 State: <p:selectOneMenu id="state" value="#{memberBean.address.state}"   style="width:150px">
@@ -38,18 +56,9 @@
                     <f:selectItems value="#{memberBean.states}" />
                 </p:selectOneMenu>    
                 Zip:<p:inputText value="#{memberBean.address.zip}"/>
-                <p:outputLabel value="Select Ethinicities:" />
-                <p:selectManyCheckbox  value="#{memberBean.ethnicities}" converter="genericEnumConverter">
-                    
-                    <f:selectItem itemValue="ASIAN" itemLabel="Asian" />
-                    <f:selectItem itemValue="BLACK_AMERICAN" itemLabel="Black American"/>
-                    <f:selectItem itemValue="WHITE_AMERICAN" itemLabel="White American"/>
-                    <f:selectItem itemValue="AFRICAN" itemLabel="African"/>
-                    <f:selectItem itemValue="EUROPEAN" itemLabel="European"/>
-           
-                </p:selectManyCheckbox>
             </p:panelGrid>
-            
+            </p:tab>
+            </p:tabView>
             <p:commandButton value="Save" action="#{memberBean.save}"/>
         </h:form>
     </ui:define>
