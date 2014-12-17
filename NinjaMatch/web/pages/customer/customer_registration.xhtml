@@ -20,8 +20,8 @@
                 </p:inputText>   
                 Password:<p:password id="pwd1" value="#{memberBean.member.password}" match="pwd2" label="Password 1" required="true" validatorMessage="does not match" />
                 Confirm Password:<p:password id="pwd2" value="#{memberBean.member.password}" label="Password 2" required="true" validatorMessage="does not match" />
-                First Name:<h:inputText value="#{memberBean.member.firstName}" required="true" />
-                Last Name:<h:inputText value="#{memberBean.member.lastname}" required="true"/>
+                First Name:<p:inputText value="#{memberBean.member.firstName}" required="true" />
+                Last Name:<p:inputText value="#{memberBean.member.lastname}" required="true"/>
                 Gender:
                 <p:selectOneRadio value="#{memberBean.member.gender}">
                     <f:selectItem itemValue="Male" itemLabel="Male" />
@@ -50,7 +50,7 @@
                 </p:selectManyCheckbox>
             </p:panelGrid>
             
-            <h:commandButton value="Save" action="#{memberBean.save}"/>
+            <p:commandButton value="Save" action="#{memberBean.save}"/>
         </h:form>
     </ui:define>
 </ui:composition>
