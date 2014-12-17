@@ -9,6 +9,8 @@ import ejb.PhotoFacade;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -44,6 +46,7 @@ public class ImageFileController implements Serializable {
     @EJB
     private DateUtil dateUtil;
 
+    private List<String> images;
     private StreamedContent streamedContent;
     private StreamedContent currentPicture;
     private UploadedFile file;
@@ -55,6 +58,14 @@ public class ImageFileController implements Serializable {
     @PostConstruct
     void init() {
         streamedContent = null;
+        images = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            images.add("girls-" + i + ".jpg");
+        }
+    }
+
+    public List<String> getImages() {
+        return images;
     }
 
     public UploadedFile getFile() {
@@ -101,7 +112,7 @@ public class ImageFileController implements Serializable {
 
     public StreamedContent getCurrentPicture() {
         MemberAccount member = (MemberAccount) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        System.out.println("=====" + member.getFirstName());
+//        System.out.println("=====" + member.getFirstName());
         Photo p = ejbPhotoFacade.getCurrentImage(member);
         if (p != null) {
             currentPicture = imageUtil.getStreamed(p.getImage());
